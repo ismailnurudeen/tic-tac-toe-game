@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
+    tools:context="com.deepsyntax.tictactoegame.MainGameActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1.1">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/player1_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="false"
+            android:layout_centerVertical="false"
+            android:layout_marginEnd="5dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:civ_border="true"
+            app:civ_border_color="#000000"
+            app:civ_border_width="1dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#ff0000"
+            app:civ_shadow_radius="3"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/player1_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/player1_img"
+            tools:text="Player 1"
+            android:fontFamily="sans-serif-light"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/player1_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/player1_img"
+            android:textSize="25sp"
+            tools:text="0"
+            android:fontFamily="sans-serif"/>
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/player2_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="false"
+            android:layout_marginStart="5dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:civ_border="true"
+            app:civ_border_color="#000000"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#ff0000"
+            app:civ_shadow_radius="3"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/player2_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/player2_img"
+            tools:ignore="RelativeOverlap"
+            tools:text="Player 2"
+            android:fontFamily="sans-serif-light"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/player2_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toStartOf="@+id/player2_img"
+            android:textSize="25sp"
+            tools:text="0"
+            tools:ignore="RelativeOverlap"
+            android:fontFamily="sans-serif"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/dividerVertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="5dp">
+
+            <GridView
+                android:id="@+id/game_board"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="3"
+                android:padding="0dp"
+                android:scrollbars="none"
+                tools:ignore="NestedScrolling" />
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/restart_game_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="@string/restart"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/end_game_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:text="@string/end_game"
+            tools:ignore="ButtonStyle,NestedWeights" />
+    </LinearLayout>
+</LinearLayout>

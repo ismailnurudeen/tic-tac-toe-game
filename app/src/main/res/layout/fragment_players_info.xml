@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginTop="100dp"
+		android:id="@+id/fragmentplayerImageView"
+		android:src="@mipmap/ic_launcher"/>
+
+	<Button
+		style="?android:attr/buttonBarButtonStyle"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Upload Image"
+		android:layout_gravity="center"
+		android:layout_marginBottom="20dp"
+		android:id="@+id/fragment_player_upload_image_btn"
+		android:drawableEnd="@android:drawable/ic_menu_camera"
+		android:drawablePadding="5dp" />
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:text="name"
+		android:layout_marginStart="18dp"
+		android:layout_marginTop="30dp"/>
+
+	<EditText
+		android:inputType="textPersonName"
+		android:layout_width="match_parent"
+		android:ems="10"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="20dp"
+		android:id="@+id/fragment_player_name_et"/>
+
+	<Button
+		style="?android:attr/buttonBarButtonStyle"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Next"
+		android:layout_marginTop="16dp"
+		android:layout_gravity="end"
+		android:layout_marginEnd="20dp"
+		android:id="@+id/fragment_playerinfo_next_btn"/>
+
+</LinearLayout>
+

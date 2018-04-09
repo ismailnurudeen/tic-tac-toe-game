@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:gravity="center_horizontal">
+
+	<LinearLayout
+		android:id="@+id/activity_splashLinearLayout"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="center"
+		android:layout_marginTop="50dp">
+
+		<TextView
+			android:id="@+id/splashTextView_tic"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:text="TIC"
+			android:textSize="40sp"
+			android:textStyle="bold"
+			android:textColor="#E9613A"/>
+
+		<TextView
+			android:id="@+id/splashTextView_tac"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:text="TAC"
+			android:textSize="40sp"
+			android:layout_marginEnd="15dp"
+			android:layout_marginStart="15dp"
+			android:textStyle="bold"
+			android:textColor="#1381A9"/>
+
+		<TextView
+			android:id="@+id/splashTextView_toe"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:text="TOE"
+			android:textSize="40sp"
+			android:textStyle="bold"
+			android:textColor="#26B708"/>
+
+	</LinearLayout>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@drawable/tictacto_board"
+		android:animation="@anim/fade_in"
+		android:animationDuration="500"
+		android:layout_margin="30dp"/>
+
+	<TextView
+		android:id="@+id/splashTextView_lets_play"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="Lets Play..."
+		android:elevation="10dp"
+		android:layout_marginTop="10dp"
+		android:textSize="20sp"
+		android:textColor="#737373"
+		android:textStyle="italic"/>
+
+</LinearLayout>
+
