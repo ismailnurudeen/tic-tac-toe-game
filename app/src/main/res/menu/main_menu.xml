@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/resize_board" android:title="Resize Board"/>
-    <item android:id="@+id/settings" android:title="Settings"/>
-    <item android:id="@+id/help" android:title="Help"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/resize_board"
+        android:title="Resize Board"
+        android:icon="@drawable/ic_zoom_out_map_black_24dp"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/settings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/help"
+        android:title="Help" />
 </menu>

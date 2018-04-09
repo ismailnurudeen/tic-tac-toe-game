@@ -4,6 +4,7 @@ import android.app.*;
 import android.content.*;
 import android.media.*;
 import android.os.*;
+import android.support.design.widget.Snackbar;
 import android.util.*;
 import android.view.*;
 import android.view.View.*;
@@ -134,6 +135,13 @@ public class GameControl implements OnClickListener{
 
 
     public void showWinDialog(String status, String msg){
+        Snackbar.make(gameBoard,"Round " + currentRound + "/" + numsRound +" "+ msg,Snackbar.LENGTH_INDEFINITE).setAction("Continue", new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        }).show();
+
         builder = new AlertDialog.Builder(mContext);
 
         if (numsRound > 0 && !(currentRound > numsRound)){
@@ -150,7 +158,7 @@ public class GameControl implements OnClickListener{
 
                     }
                 });
-                builder.setNeutralButton("View Board", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("View Board", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int p2){
@@ -160,7 +168,7 @@ public class GameControl implements OnClickListener{
                 });
             }
             else{
-                builder.setNeutralButton("View Board", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("View Board", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int p2){
@@ -176,7 +184,7 @@ public class GameControl implements OnClickListener{
                         dialog.dismiss();
                     }
                 });
-                builder.setNegativeButton("End Game", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("End Game", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int p2){
@@ -189,7 +197,7 @@ public class GameControl implements OnClickListener{
         }
         else{
             builder.setTitle(status);
-            builder.setNeutralButton("View Board", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("View Board", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int p2){
@@ -205,12 +213,13 @@ public class GameControl implements OnClickListener{
                     dialog.dismiss();
                 }
             });
-            builder.setNegativeButton("End Game", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton("End Game", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int p2){
                     restartGame();
                     dialog.dismiss();
+                    showGameOverDialog();
                     comInterface.onEndGame();
                 }
             });
