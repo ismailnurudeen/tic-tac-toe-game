@@ -1,43 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:gravity="center">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:orientation="horizontal"
-		android:gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="Number of Rounds"
-			android:layout_marginEnd="30dp"
-			android:layout_marginStart="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="10dp"
+            android:text="Number of Rounds"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-		<EditText
-			android:id="@+id/initial_game_settings_rounds"
-			android:layout_width="wrap_content"
-			android:inputType="number"
-			android:ems="10"
-			android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/initial_game_settings_rounds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<Button
-		android:id="@+id/fragment_initial_game_settings_next_btn"
-		style="?android:attr/buttonBarButtonStyle"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:text="Next"
-		android:layout_gravity="end"
-		android:layout_marginEnd="30dp"
-		android:layout_marginTop="30dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/symbol_picker"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick a Symbol"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="100dp">
+            <ImageButton
+                android:id="@+id/x_selected"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/x"
+                android:scaleType="centerCrop"/>
+            <ImageButton
+                android:id="@+id/o_selected"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/o"
+                android:scaleType="centerCrop"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/fragment_initial_game_settings_next_btn"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:text="Next" />
 
 </LinearLayout>
 

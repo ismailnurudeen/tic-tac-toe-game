@@ -3,6 +3,55 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="end_game">end game</string>
+    <string name="end_game">End game</string>
     <string name="restart">Restart</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_click_sound">Enable click sound</string>
+    <string name="pref_description_click_sound">Play sound when box is clicked
+    </string>
+
+    <string name="pref_title_difficulty">Game difficulty</string>
+    <string-array name="pref_difficulty_list_titles">
+        <item>Easy</item>
+        <item>Normal</item>
+        <item>Unbeatable</item>
+    </string-array>
+    <string-array name="pref_difficulty_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string name="pref_title_board_type">Board Type</string>
+    <string-array name="pref_board_type_list_titles">
+        <item>3x3 Grid</item>
+        <item>5x5 Grid</item>
+    </string-array>
+    <string-array name="pref_board_type_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="pref_title_game_theme">Game Theme</string>
+    <string-array name="pref_game_theme_list_titles">
+        <item>Default</item>
+        <item>Theme 1</item>
+        <item>Theme 2</item>
+        <item>Theme 3</item>
+        <item>Theme 4</item>
+    </string-array>
+    <string-array name="pref_game_theme_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
 </resources>

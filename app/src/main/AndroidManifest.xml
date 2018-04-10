@@ -20,8 +20,18 @@
             android:label="@string/app_name" />
         <activity
             android:name=".MainGameActivity"
-            android:label="@string/app_name" />
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity android:name=".PlayersInfoActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainGameActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.deepsyntax.tictactoegame.MainGameActivity" />
+        </activity>
     </application>
 
 </manifest>

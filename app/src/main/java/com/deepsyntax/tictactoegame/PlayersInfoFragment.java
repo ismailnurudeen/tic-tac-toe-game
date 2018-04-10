@@ -1,6 +1,7 @@
 package com.deepsyntax.tictactoegame;
 import android.app.*;
 import android.content.*;
+import android.graphics.Bitmap;
 import android.os.*;
 import android.view.*;
 import android.view.View.*;
@@ -16,6 +17,10 @@ public class PlayersInfoFragment extends Fragment implements OnClickListener{
 	ArrayList<String> playersName=new ArrayList<>();
 	ArrayList<Byte> playersImage=new ArrayList<>();
 	int counter=0;
+	private ImageView playerImagePreview;
+	private Button uploadImageBtn;
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -33,27 +38,45 @@ public class PlayersInfoFragment extends Fragment implements OnClickListener{
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState){
 		super.onViewCreated(view, savedInstanceState);
-		view.findViewById(R.id.fragment_playerinfo_next_btn)
-			.setOnClickListener(this);
+		Button nextBtn=view.findViewById(R.id.fragment_playerinfo_next_btn);
 		nameEditText = view.findViewById(R.id.fragment_player_name_et);
-		//Toast.makeText(getContext(), getTag(), Toast.LENGTH_SHORT).show();
+		playerImagePreview = view.findViewById(R.id.fragmentplayerImageView);
+		uploadImageBtn = view.findViewById(R.id.fragment_player_upload_image_btn);
+        nextBtn.setOnClickListener(this);
+       uploadImageBtn.setOnClickListener(this);
 	}
 
 	@Override
-	public void onClick(View v){
-		FragmentsInterface fragInterface=(FragmentsInterface) getActivity();
-		//int state=getTag().equals(PlayersInfoActivity.PLAYER_1_TAG) ? 0:1;
-		if (nameEditText.getText().toString().length() < 1)return;
+	public void onClick(View v) {
+        FragmentsInterface fragInterface = (FragmentsInterface) getActivity();
+        switch (v.getId()) {
+            case R.id.fragment_playerinfo_next_btn:
+                //int state=getTag().equals(PlayersInfoActivity.PLAYER_1_TAG) ? 0:1;
+                if (nameEditText.getText().toString().length() < 1) {
+					Toast.makeText(getActivity(),"Input a name...",Toast.LENGTH_SHORT).show();
+					return;
+				}
 
-		String playerName=nameEditText.getText().toString();
-		playersName.add(playerName);
-		resetFields();
-		counter++;
-		
-		if (counter == 2) fragInterface.OnPlayerSettingsComplete(playersName);
-	}
+                String playerName = nameEditText.getText().toString();
+                playersName.add(playerName);
+                //playersImage.add()
+                resetFields();
+                counter++;
+                if (counter == 2) fragInterface.OnPlayerSettingsComplete(playersName);
+                break;
+            case R.id.fragment_player_upload_image_btn:
+                fragInterface.OnUploadImage();
+                break;
+        }
+    }
 	private void resetFields(){
 		nameEditText.setText("");
-		nameEditText.setHint("Player 2 Name");
+		nameEditText.setHint("Player 2");
 	}
+
+    private void showSelectedImage(Bitmap imgBitmap){
+        // TODO: Implement this method
+        playerImagePreview.setImageBitmap(imgBitmap);
+        playerImagePreview.setVisibility(View.VISIBLE);
+    }
 }

@@ -28,7 +28,7 @@ public class InitialSettingsFragment extends Fragment implements OnClickListener
 		super.onViewCreated(view, savedInstanceState);
 		view.findViewById(R.id.fragment_initial_game_settings_next_btn)
 		.setOnClickListener(this);
-		roundEditText=(EditText)view.findViewById(R.id.initial_game_settings_rounds);
+		roundEditText= view.findViewById(R.id.initial_game_settings_rounds);
 		
 	}
 
@@ -36,7 +36,12 @@ public class InitialSettingsFragment extends Fragment implements OnClickListener
 	public void onClick(View v){
 		FragmentsInterface fragInterface=(FragmentsInterface) getActivity();
 		String rounds=roundEditText.getText().toString();
-		fragInterface.OnGameSettingsComplete(playerNames,Integer.parseInt(rounds));
+		if(rounds.length() < 1){
+		    Toast.makeText(getActivity(),"Indicate Number of rounds",Toast.LENGTH_SHORT).show();
+		    return;
+        }
+		ArrayList<byte[]> imageList=new ArrayList();
+		fragInterface.OnGameSettingsComplete(playerNames,imageList,Integer.parseInt(rounds));
 	}
 
 	public void newInstance(ArrayList<String> names){

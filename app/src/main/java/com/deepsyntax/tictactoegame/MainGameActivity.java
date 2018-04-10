@@ -12,6 +12,8 @@ import java.util.*;
 
 import android.view.View.OnClickListener;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
+
 
 public class MainGameActivity extends AppCompatActivity implements OnItemClickListener,OnClickListener,GameControl.ComInterface{
     private SharedPreferences prefs;
@@ -24,7 +26,9 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     private GameControl gameControl;
     private boolean isSmallBoard=true;
     private Button restartGameBtn,endGameBtn;
-
+    private CircularImageView player1Image;
+    private CircularImageView player2Image;
+    private boolean isPlayerTurn;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,9 +46,10 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
 
         int numsRound = extras.getInt("NUMBER_OF_ROUNDS", 0);
 
-        gameControl.setPlayersProps(player1Name, player2Name, player1ScoreTv, player2ScoreTv);
+        gameControl.setPlayersProps(player1Name, player2Name, player1ScoreTv, player2ScoreTv,player1Image,player2Image);
         gameControl.setNumberOfRounds(numsRound);
         gameControl.resetScore();
+        gameControl.showActivePlayer(player1Image);
     }
 
     @Override
@@ -72,6 +77,8 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         player2NameTv = findViewById(R.id.player2_label);
         player1ScoreTv = findViewById(R.id.player1_score);
         player2ScoreTv = findViewById(R.id.player2_score);
+        player1Image=findViewById(R.id.player1_img);
+        player2Image=findViewById(R.id.player2_img);
 
         restartGameBtn = findViewById(R.id.restart_game_btn);
         endGameBtn = findViewById(R.id.end_game_btn);
@@ -98,7 +105,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         restartGameBtn.setEnabled(state);
     }
     public void endGame(){
-        MainGameActivity.this.finish();
+        gameControl.showGameOverDialog();
     }
 
     @Override
@@ -138,6 +145,12 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
                     board.resetBoardSize(gameBoard);
                     isSmallBoard=!isSmallBoard;
                 }
+                break;
+            case R.id.settings:
+                Intent settingsIntent=new Intent(this,SettingsActivity.class);
+                settingsIntent.putExtra(SettingsActivity.SETTINGS_TO_SHOW,"MAINGAMEACTIVITY");
+                startActivity(settingsIntent);
+
         }
         return super.onOptionsItemSelected(item);
     }

@@ -39,6 +39,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
 		android:layout_marginEnd="20dp"
+		android:hint="Player 1"
 		android:id="@+id/fragment_player_name_et"/>
 
 	<Button

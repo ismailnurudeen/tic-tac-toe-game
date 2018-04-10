@@ -27,9 +27,8 @@
             android:src="@mipmap/ic_launcher_round"
             app:civ_border="true"
             app:civ_border_color="#000000"
-            app:civ_border_width="1dp"
+            app:civ_border_width="3dp"
             app:civ_shadow="true"
-            app:civ_shadow_color="#ff0000"
             app:civ_shadow_radius="3"
             tools:ignore="ContentDescription" />
 
@@ -38,9 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/player1_img"
-            tools:text="Player 1"
             android:fontFamily="sans-serif-light"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            tools:text="Player 1" />
 
         <TextView
             android:id="@+id/player1_score"
@@ -48,9 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/player1_img"
+            android:fontFamily="sans-serif"
             android:textSize="25sp"
-            tools:text="0"
-            android:fontFamily="sans-serif"/>
+            tools:text="0" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/player2_img"
@@ -62,9 +61,8 @@
             android:src="@mipmap/ic_launcher_round"
             app:civ_border="true"
             app:civ_border_color="#000000"
-            app:civ_border_width="2dp"
+            app:civ_border_width="3dp"
             app:civ_shadow="true"
-            app:civ_shadow_color="#ff0000"
             app:civ_shadow_radius="3"
             tools:ignore="ContentDescription" />
 
@@ -74,10 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/player2_img"
-            tools:ignore="RelativeOverlap"
-            tools:text="Player 2"
             android:fontFamily="sans-serif-light"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            tools:ignore="RelativeOverlap"
+            tools:text="Player 2" />
 
         <TextView
             android:id="@+id/player2_score"
@@ -85,10 +83,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@+id/player2_img"
+            android:fontFamily="sans-serif"
             android:textSize="25sp"
-            tools:text="0"
             tools:ignore="RelativeOverlap"
-            android:fontFamily="sans-serif"/>
+            tools:text="0" />
     </RelativeLayout>
 
     <View
