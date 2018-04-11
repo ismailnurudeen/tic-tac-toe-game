@@ -356,7 +356,8 @@ public class GameControl implements OnClickListener {
         return comPlaying;
     }
 
-    public void setPlayersProps(String player1name, String player2name, TextView player1scoreTv, TextView player2scoreTv, CircularImageView player1Img, CircularImageView player2Img) {
+    public void setPlayersProps(String player1name, String player2name, TextView player1scoreTv, TextView player2scoreTv,
+                                CircularImageView player1Img, CircularImageView player2Img) {
         this.player1Name = player1name;
         this.player2Name = player2name;
         this.player1ScoreTv = player1scoreTv;
