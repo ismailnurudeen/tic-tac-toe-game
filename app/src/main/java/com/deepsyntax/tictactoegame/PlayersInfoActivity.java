@@ -58,6 +58,7 @@ public class PlayersInfoActivity extends AppCompatActivity implements FragmentsI
 		in.putExtra("SINGLE_PLAYER",false);
 		in.putExtra("NUMBER_OF_ROUNDS",rounds);
 		in.putStringArrayListExtra("PLAYER_NAMES",playerNames);
+		in.putExtra("Player_Symbol", playerSymbol);
 		//in.putExtra("PLAYER_IMAGES",byteListToArray(playerImages));
 		startActivity(in);
 		finish();
