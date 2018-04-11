@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentsInterface{
-    @Override
+	private MainMenuFragment mainMenuFragment;
+
+	@Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
        // if(getSupportActionBar()!=null)getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-		MainMenuFragment mainMenuFragment=new MainMenuFragment();
-
+		mainMenuFragment=new MainMenuFragment();
 		getFragmentManager()
 				.beginTransaction()
 				.replace(R.id.main_menu_fragment, mainMenuFragment, "Main Menu")
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements FragmentsInterfac
 		startGame.putExtra("SINGLE_PLAYER",true);
 		startGame.putExtra("Player_Symbol",playerSymbol);
 		startActivity(startGame);
+		getFragmentManager()
+				.beginTransaction()
+				.replace(R.id.main_menu_fragment, mainMenuFragment, "Main Menu")
+				.commit();
 	}
 
 	@Override

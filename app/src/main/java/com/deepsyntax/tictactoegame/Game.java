@@ -29,8 +29,8 @@ public class Game {
     private int moves[] = new int[9];
     private int tempMoves[] = new int[9];
     Context mContext;
-    private int xPlayerSymbol;
-    private int oPlayerSymbol;
+    private int xPlayerSymbol=R.drawable.x;
+    private int oPlayerSymbol=R.drawable.o;
 
     ArrayList<ArrayList> winComboList = new ArrayList<>();
 
@@ -39,8 +39,6 @@ public class Game {
 
     public Game(Context ctx) {
         mContext = ctx;
-        xPlayerSymbol = R.drawable.x;
-        oPlayerSymbol = R.drawable.o;
         newGame();
     }
 
