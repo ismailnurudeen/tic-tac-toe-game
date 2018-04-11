@@ -6,22 +6,21 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="end">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="95dp"
             android:text="Number of Rounds"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/initial_game_settings_rounds"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number" />
@@ -31,35 +30,64 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick a Symbol"
-            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:textSize="18sp"/>
+            android:text="Pick a Symbol"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+           android:layout_weight="1"
+            android:gravity="end">
 
             <RadioGroup
+                android:id="@+id/symbol_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:id="@+id/symbol_picker"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/x_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/x"/>
+                    android:checked="true"
+                    android:layout_marginEnd="10dp"/>
+
                 <RadioButton
                     android:id="@+id/o_selected"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/o"
-                    />
+                    android:layout_height="wrap_content" />
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/x"
+                    android:scaleType="centerInside"
+                    android:layout_marginEnd="10dp"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/o"
+                    android:scaleType="centerInside"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <Button

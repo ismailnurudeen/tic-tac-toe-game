@@ -161,6 +161,7 @@ public class GameControl implements OnClickListener {
         hasXplayed = false;
         gameOver = false;
         game.newGame();
+        showActivePlayer(player1ImageView);
         boardAdapter = new GameBoardAdapter(mContext, boxes);
         gameBoard.setAdapter(boardAdapter);
     }
