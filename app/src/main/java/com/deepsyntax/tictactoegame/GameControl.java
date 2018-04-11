@@ -139,7 +139,7 @@ public class GameControl implements OnClickListener {
 
     public void changeTurn() {
         hasXplayed = !hasXplayed;
-        player1ImageView.setShadowRadius(Color.BLACK);
+        player1ImageView.setBorderColor(Color.BLACK);
         player2ImageView.setBorderColor(Color.BLACK);
 
         if (hasXplayed) {
@@ -151,7 +151,7 @@ public class GameControl implements OnClickListener {
 
     public void showActivePlayer(CircularImageView imageView) {
         imageView.addShadow();
-        imageView.setBorderColor(Color.RED);
+        imageView.setBorderColor(Color.GREEN);
     }
 
     public void restartGame() {
@@ -166,12 +166,12 @@ public class GameControl implements OnClickListener {
 
 
     public void showWinDialog(String status, String msg) {
-        Snackbar.make(gameBoard, "Round " + currentRound + "/" + numsRound + " " + msg, Snackbar.LENGTH_INDEFINITE).setAction("Continue", new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        }).show();
+        //Snackbar.make(gameBoard, "Round " + currentRound + "/" + numsRound + " " + msg, Snackbar.LENGTH_INDEFINITE).setAction("Continue", new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        }).show();
 
         builder = new AlertDialog.Builder(mContext);
 

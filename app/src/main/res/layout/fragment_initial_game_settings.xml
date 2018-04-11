@@ -43,24 +43,21 @@
             android:layout_marginStart="16dp"
             android:textSize="18sp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="100dp">
-            <ImageButton
-                android:id="@+id/x_selected"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/x"
-                android:scaleType="centerCrop"/>
-            <ImageButton
-                android:id="@+id/o_selected"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/o"
-                android:scaleType="centerCrop"/>
-        </LinearLayout>
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp">
+                <RadioButton
+                    android:id="@+id/x_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/x"/>
+                <RadioButton
+                    android:id="@+id/o_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/o"/>
+            </RadioGroup>
     </LinearLayout>
 
     <Button
@@ -69,8 +66,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="50dp"
         android:text="Next" />
 
 </LinearLayout>

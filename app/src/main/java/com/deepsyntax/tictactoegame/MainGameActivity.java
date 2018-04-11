@@ -115,7 +115,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
 
     @Override
     public void onEndGame(){
-        endGame();
+       finish();
     }
 
     @Override
