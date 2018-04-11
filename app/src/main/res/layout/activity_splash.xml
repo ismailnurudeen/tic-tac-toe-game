@@ -9,11 +9,12 @@
 
 	<LinearLayout
 		android:id="@+id/activity_splashLinearLayout"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_width="match_parent"
 		android:orientation="horizontal"
 		android:gravity="center"
-		android:layout_marginTop="50dp">
+		android:layout_marginTop="50dp"
+        android:layout_weight="1">
 
 		<TextView
 			android:id="@+id/splashTextView_tic"
@@ -50,24 +51,24 @@
 	</LinearLayout>
 
 	<ImageView
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_width="match_parent"
 		android:src="@drawable/tictactoe_board"
 		android:animation="@anim/fade_in"
 		android:animationDuration="500"
-		android:layout_margin="30dp"/>
+		android:layout_marginTop="0dp"
+        android:layout_weight="5"/>
 
 	<TextView
 		android:id="@+id/splashTextView_lets_play"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="0dp"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:text="Lets Play..."
-		android:elevation="10dp"
-		android:layout_marginTop="10dp"
 		android:textSize="20sp"
 		android:textColor="#737373"
-		android:textStyle="italic"/>
+		android:textStyle="italic"
+        android:layout_weight="1"/>
 
 </LinearLayout>
 

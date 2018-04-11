@@ -45,6 +45,11 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         displayPlayerInfo();
 
         int numsRound = extras.getInt("NUMBER_OF_ROUNDS", 0);
+        int player1Symbol=extras.getInt("Player_Symbol",R.drawable.x);
+        int player2Symbol=player1Symbol==R.drawable.x?R.drawable.o:R.drawable.x;
+        Game game=new Game(this);
+        game.setXPlayerSymbol(player1Symbol);
+        game.setOPlayerSymbol(player2Symbol);
 
         gameControl.setPlayersProps(player1Name, player2Name, player1ScoreTv, player2ScoreTv,player1Image,player2Image);
         gameControl.setNumberOfRounds(numsRound);

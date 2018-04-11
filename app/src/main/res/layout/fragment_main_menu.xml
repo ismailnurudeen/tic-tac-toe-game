@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/main_menu"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginTop="150dp"
+    android:text="Play as :"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:textSize="20sp" />
+
+<Button
+    android:id="@+id/single_player_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginStart="20dp"
+    android:background="@color/colorPrimary"
+    android:onClick="handleClicks"
+    android:text="Single Player"
+    android:textColor="#FFFFFF"
+    android:textSize="25sp" />
+
+<Button
+    android:id="@+id/multi_player_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/colorPrimary"
+    android:onClick="handleClicks"
+    android:text="Multi Player"
+    android:textColor="#FFFFFF"
+    android:textSize="25sp" />
+</LinearLayout>

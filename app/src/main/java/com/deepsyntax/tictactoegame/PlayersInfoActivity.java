@@ -54,7 +54,7 @@ public class PlayersInfoActivity extends AppCompatActivity implements FragmentsI
 			.commit();
 	}
 	@Override
-	public void OnGameSettingsComplete(ArrayList<String> playerNames,ArrayList<byte[]> playerImages,int rounds){
+	public void OnGameSettingsComplete(ArrayList<String> playerNames,ArrayList<byte[]> playerImages,int playerSymbol,int rounds){
 		in.putExtra("SINGLE_PLAYER",false);
 		in.putExtra("NUMBER_OF_ROUNDS",rounds);
 		in.putStringArrayListExtra("PLAYER_NAMES",playerNames);

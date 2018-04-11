@@ -272,5 +272,4 @@ public class Game {
         }
         return possibleMove.get(bestMove);
     }
-
 }

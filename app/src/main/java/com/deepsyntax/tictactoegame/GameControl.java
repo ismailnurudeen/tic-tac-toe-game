@@ -139,8 +139,8 @@ public class GameControl implements OnClickListener {
 
     public void changeTurn() {
         hasXplayed = !hasXplayed;
-        player1ImageView.setBorderColor(Color.BLACK);
-        player2ImageView.setBorderColor(Color.BLACK);
+        player1ImageView.setBorderColor(Color.DKGRAY);
+        player2ImageView.setBorderColor(Color.DKGRAY);
 
         if (hasXplayed) {
             showActivePlayer(player2ImageView);
@@ -150,8 +150,9 @@ public class GameControl implements OnClickListener {
     }
 
     public void showActivePlayer(CircularImageView imageView) {
+       int activeColor= mContext.getResources().getColor(R.color.colorAccent);
         imageView.addShadow();
-        imageView.setBorderColor(Color.GREEN);
+        imageView.setBorderColor(activeColor);
     }
 
     public void restartGame() {
@@ -221,7 +222,6 @@ public class GameControl implements OnClickListener {
                         restartGame();
                         dialog.dismiss();
                         showGameOverDialog();
-                        comInterface.onEndGame();
                     }
                 });
             }
@@ -250,7 +250,6 @@ public class GameControl implements OnClickListener {
                     restartGame();
                     dialog.dismiss();
                     showGameOverDialog();
-                    comInterface.onEndGame();
                 }
             });
         }
@@ -365,7 +364,6 @@ public class GameControl implements OnClickListener {
         this.player1ImageView = player1Img;
         this.player2ImageView = player2Img;
     }
-
     public interface ComInterface {
         void onViewBoard(boolean isViewing);
 
