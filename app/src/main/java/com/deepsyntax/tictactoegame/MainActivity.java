@@ -48,10 +48,12 @@ public class MainActivity extends AppCompatActivity implements FragmentsInterfac
     }
 
     @Override
-    public void OnGameSettingsComplete(ArrayList<String> playerNames, ArrayList<byte[]> playerImage, int playerSymbol, int rounds) {
+    public void OnGameSettingsComplete(ArrayList<String> playerNames, ArrayList<byte[]> playerImage, int playerSymbol,int numBoardGrid, int rounds) {
         Intent startGame = new Intent(MainActivity.this, MainGameActivity.class);
         startGame.putExtra("SINGLE_PLAYER", true);
-        startGame.putExtra("Player_Symbol", playerSymbol);
+        startGame.putExtra("PLAYER_SYMBOL", playerSymbol);
+        startGame.putExtra("NUMBER_OF_GRIDS", numBoardGrid);
+
         startActivity(startGame);
                     getFragmentManager()
                             .beginTransaction()

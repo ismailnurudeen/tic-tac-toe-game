@@ -62,13 +62,13 @@ public class GameControl implements OnClickListener {
         this.mContext = ctx;
         boardAdapter = adapter;
         gameBoard = board;
-        game = new Game(ctx);
-        boxes = Board.generateBoxes(9);
+        boxes = Board.generateBoxes((int)Math.pow(board.getNumColumns(),2));
+        game = new Game(ctx,boxes.size());
         comInterface = (GameControl.ComInterface) mContext;
     }
 
     public void playSound(int soundID) {
-        if (mp != null) mp = null;
+        if (mp != null) mp.release();
         mp = MediaPlayer.create(mContext, soundID);
         mp.start();
     }
@@ -161,9 +161,12 @@ public class GameControl implements OnClickListener {
         hasXplayed = false;
         gameOver = false;
         game.newGame();
-        showActivePlayer(player1ImageView);
         boardAdapter = new GameBoardAdapter(mContext, boxes);
         gameBoard.setAdapter(boardAdapter);
+
+        player1ImageView.setBorderColor(Color.DKGRAY);
+        player2ImageView.setBorderColor(Color.DKGRAY);
+        showActivePlayer(player1ImageView);
     }
 
 
