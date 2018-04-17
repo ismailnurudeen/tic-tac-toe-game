@@ -1,5 +1,6 @@
 package com.deepsyntax.tictactoegame;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,7 +8,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +25,8 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class GameControl implements OnClickListener {
     private Context mContext;
     private GameBoardAdapter boardAdapter;
@@ -33,7 +35,6 @@ public class GameControl implements OnClickListener {
     private int currentRound = 1;
     private AlertDialog gameOverDialog;
     private int gameStatus;
-
     private boolean gameOver;
     private boolean hasXplayed;
     private boolean comPlaying;
@@ -46,12 +47,13 @@ public class GameControl implements OnClickListener {
     private int player1Score, player2Score;
     private String player1Name, player2Name;
 
-    private ArrayList boxes;
+    private ArrayList boxes = Board.generateBoxes(9);
     private MediaPlayer mp;
     ComInterface comInterface;
     private AlertDialog.Builder builder;
 
     private boolean quickView;
+    private int position;
 
     public GameControl(Context ctx) {
         this.mContext = ctx;
@@ -62,9 +64,14 @@ public class GameControl implements OnClickListener {
         this.mContext = ctx;
         boardAdapter = adapter;
         gameBoard = board;
-        boxes = Board.generateBoxes((int)Math.pow(board.getNumColumns(),2));
-        game = new Game(ctx,boxes.size());
+        boxes = Board.generateBoxes((int) Math.pow(Board.numOfColumns, 2));
+        game = new Game(ctx, Board.numOfColumns);
         comInterface = (GameControl.ComInterface) mContext;
+        Log.v("GAME CONTROL", Board.numOfColumns + "");
+    }
+
+    public void instancaite() {
+        game = new Game(mContext, 1);
     }
 
     public void playSound(int soundID) {
@@ -76,7 +83,6 @@ public class GameControl implements OnClickListener {
     public boolean play(int position, View v) {
         if (playedPosition.contains(position) || gameOver)
             return false;
-
         playSound(R.raw.tink);
         playedPosition.add(position);
         displaySymbol(v, position);
@@ -94,6 +100,7 @@ public class GameControl implements OnClickListener {
             gameBox.setImageResource(currentPlayer);
         } else {
             game.addMove(position, currentPlayer);
+//            boxes = Board.generateBoxes((int) Math.pow(gameBoard.getNumColumns(), 2));
             boardAdapter = new GameBoardAdapter(mContext, boxes, currentPlayer, game.getAllMoves());
             gameBoard.setAdapter(boardAdapter);
         }
@@ -104,6 +111,7 @@ public class GameControl implements OnClickListener {
 
         if (gameStatus == 0) {
             showWinDialog("DRAW", "Perfect play!\tits a draw!");
+            boxes = Board.generateBoxes((int) Math.pow(gameBoard.getNumColumns(), 2));
             boardAdapter = new GameBoardAdapter(mContext, boxes, currentPlayer, game.getWinPattern(), game.getAllMoves());
             gameBoard.setAdapter(boardAdapter);
             gameOver = true;
@@ -119,11 +127,16 @@ public class GameControl implements OnClickListener {
         }
     }
 
+    @SuppressLint("WrongConstant")
     public void computerPlay(View v) {
-        final int position = game.minimax(game.getAllMoves(), game.getOPlayerSymbol());
-        if (!gameOver) Toast.makeText(mContext, "Thinking...", 50).show();
+        if (Board.numOfColumns > 3) {
+            position = game.machinePlayer();
+                    //game.minimax(game.getAllMoves(), game.getOPlayerSymbol());
+        } else {
+            position = game.myAi();
+        }
+        Toast.makeText(mContext, "Thinking...", 10).show();
 
-        Log.v("MAIN-GAME-ACTIVITY", game.minimax(game.getAllMoves(), game.getOPlayerSymbol()) + "");
         comPlaying = true;
         Handler delay = new Handler(Looper.getMainLooper());
         delay.postDelayed(new Runnable() {
@@ -150,7 +163,7 @@ public class GameControl implements OnClickListener {
     }
 
     public void showActivePlayer(CircularImageView imageView) {
-       int activeColor= mContext.getResources().getColor(R.color.colorAccent);
+        int activeColor = mContext.getResources().getColor(R.color.colorAccent);
         imageView.addShadow();
         imageView.setBorderColor(activeColor);
     }
@@ -161,6 +174,7 @@ public class GameControl implements OnClickListener {
         hasXplayed = false;
         gameOver = false;
         game.newGame();
+        boxes = Board.generateBoxes((int) Math.pow(gameBoard.getNumColumns(), 2));
         boardAdapter = new GameBoardAdapter(mContext, boxes);
         gameBoard.setAdapter(boardAdapter);
 
@@ -169,6 +183,86 @@ public class GameControl implements OnClickListener {
         showActivePlayer(player1ImageView);
     }
 
+    public void showSweetWinDialog(String status, String msg) {
+        final SweetAlertDialog sweetDialog = new SweetAlertDialog(mContext, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+        sweetDialog.setCustomImage(currentPlayer);
+
+        builder = new AlertDialog.Builder(mContext);
+
+        if (numsRound > 0 && !(currentRound > numsRound)) {
+            sweetDialog.setTitleText("Round " + currentRound + "/" + numsRound);
+            builder.setTitle("Round " + currentRound + "/" + numsRound);
+            currentRound++;
+
+            if (currentRound > numsRound) {
+                sweetDialog.setConfirmText("Game Over")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetDialog.dismiss();
+                                showGameOverDialog();
+                            }
+                        });
+            } else {
+                sweetDialog.setConfirmText("Continue")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                restartGame();
+                                sweetDialog.dismiss();
+                            }
+                        });
+                sweetDialog.setCancelText("View Board")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetDialog.dismiss();
+                                hideSweetDialog(sweetDialog);
+                            }
+                        });
+            }
+        } else {
+            sweetDialog.setTitleText(status);
+            sweetDialog.setConfirmText("Continue")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            restartGame();
+                            sweetDialog.dismiss();
+                        }
+                    });
+            sweetDialog.setCancelText("View Board")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetDialog.dismiss();
+                            hideSweetDialog(sweetDialog);
+                        }
+                    });
+        }
+        sweetDialog.setContentText(msg)
+                .setCancelable(false);
+        sweetDialog.show();
+    }
+
+    public void hideSweetDialog(final SweetAlertDialog dialog) {
+        comInterface.onViewBoard(false);
+        gameBoard.setOnTouchListener(new OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent e) {
+                dialog.show();
+                comInterface.onViewBoard(true);
+                gameBoard.setOnTouchListener(null);
+                return false;
+            }
+        });
+    }
 
     public void showWinDialog(String status, String msg) {
         //Snackbar.make(gameBoard, "Round " + currentRound + "/" + numsRound + " " + msg, Snackbar.LENGTH_INDEFINITE).setAction("Continue", new OnClickListener() {
@@ -265,26 +359,18 @@ public class GameControl implements OnClickListener {
 
     public void delayDialog(final AlertDialog.Builder builder) {
         comInterface.onViewBoard(false);
-
-        new Handler().postDelayed(new Runnable() {
+        gameBoard.setOnTouchListener(new OnTouchListener() {
 
             @Override
-            public void run() {
-                gameBoard.setOnTouchListener(new OnTouchListener() {
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent e) {
-                        builder.create();
-                        builder.show();
-                        comInterface.onViewBoard(true);
-                        gameBoard.setOnTouchListener(null);
-                        quickView = true;
-                        return false;
-                    }
-                });
+            public boolean onTouch(View v, MotionEvent e) {
+                builder.create();
+                builder.show();
+                comInterface.onViewBoard(true);
+                gameBoard.setOnTouchListener(null);
+                quickView = true;
+                return false;
             }
-        }, 500L);
-
+        });
     }
 
     public void showGameOverDialog() {
@@ -369,6 +455,11 @@ public class GameControl implements OnClickListener {
         this.player1ImageView = player1Img;
         this.player2ImageView = player2Img;
     }
+
+    public boolean gameOver() {
+        return gameOver;
+    }
+
     public interface ComInterface {
         void onViewBoard(boolean isViewing);
 

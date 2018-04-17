@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:background="#5F5D5D">
+    android:background="@color/colorAccent">
+
 
     <ImageView
         android:id="@+id/game_box"
-        android:layout_height="100dp"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/brick_bg"
+        android:padding="3dp"
         android:scaleType="centerCrop"
-        android:background="#FFFFFF"/>
+        tools:srcCompat="@drawable/x" />
 
 </FrameLayout>

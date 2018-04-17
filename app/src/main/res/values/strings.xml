@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TicTacToe</string>
+    <string name="app_name">Master TicTacToe</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -39,6 +39,8 @@
     </string-array>
 
     <string name="pref_title_game_theme">Game Theme</string>
+    <string name="multi_player">MultiPlayer</string>
+    <string name="single_player">SinglePlayer</string>
     <string-array name="pref_game_theme_list_titles">
         <item>Default</item>
         <item>Theme 1</item>

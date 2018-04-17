@@ -22,10 +22,13 @@ public class Board {
     private int[] mWinPattern;
     private int mSymbol;
     private int[] mPlayedMoves;
-    public final int DEFAULT_BOX_HEIGHT_3x3 =100;
-    public final int DEFAULT_BOX_WIDTH_3x3=100;
-    public final int DEFAULT_BOX_HEIGHT_5x5 =65;
-    public final int DEFAULT_BOX_WIDTH_5x5=65;
+    public final int DEFAULT_BOX_HEIGHT_3x3 = 80;
+    public final int DEFAULT_BOX_WIDTH_3x3 = 80;
+    public final int DEFAULT_BOX_HEIGHT_5x5 = 50;
+    public final int DEFAULT_BOX_WIDTH_5x5 = 50;
+    private static int boxHeight = 80;
+    private static int boxWidth = 80;
+    public static int numOfColumns = 3;
 
     public int boardArea = -1;
 
@@ -77,7 +80,7 @@ public class Board {
     }
 
     public void reDisplayBoard(View v, int position) {
-        mBox = (ImageView) v.findViewById(R.id.game_box);
+        mBox = v.findViewById(R.id.game_box);
         for (int i = 0; i < mPlayedMoves.length; i++) {
             if (mPlayedMoves[i] != -1) {
                 if (i == position) {
@@ -109,20 +112,21 @@ public class Board {
 
     public void resizeBoard(GridView board, int height, int width) {
         boardArea = pixelsToDips(width * board.getNumColumns());
-
-        GameBoardAdapter adapter = new GameBoardAdapter(mContext, numsOfBoxes, GameControl.currentPlayer, GameControl.game.getAllMoves());
-        adapter.setBoxArea(height, width);
         board.getLayoutParams().width = boardArea;
+        board.getLayoutParams().height = boardArea;
+
+        setBoxArea(height, width);
+        GameBoardAdapter adapter = new GameBoardAdapter(mContext, numsOfBoxes, GameControl.currentPlayer, GameControl.game.getAllMoves());
         board.setAdapter(adapter);
     }
 
     public void resetBoardSize(GridView board) {
-        int grids = (int) Math.pow(board.getNumColumns(),2);
+        int grids = (int) Math.pow(board.getNumColumns(), 2);
         setNumsBoxes(generateBoxes(grids));
-        if(!(grids>9)){
-            resizeBoard(board,DEFAULT_BOX_HEIGHT_3x3,DEFAULT_BOX_WIDTH_3x3);
-        }else{
-            resizeBoard(board,DEFAULT_BOX_HEIGHT_5x5,DEFAULT_BOX_WIDTH_5x5);
+        if (!(grids > 9)) {
+            resizeBoard(board, DEFAULT_BOX_HEIGHT_3x3, DEFAULT_BOX_WIDTH_3x3);
+        } else {
+            resizeBoard(board, DEFAULT_BOX_HEIGHT_5x5, DEFAULT_BOX_WIDTH_5x5);
         }
     }
 
@@ -134,12 +138,27 @@ public class Board {
         numsOfBoxes = nums;
     }
 
+    public static int getBoxHeight() {
+        return boxHeight;
+    }
+
+    public static int getBoxWidth() {
+        return boxWidth;
+    }
+
+    public void setBoxArea(int height, int width) {
+        boxHeight = height;
+        boxWidth = width;
+    }
+
     public int pixelsToDips(int px) {
         int dimensionInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, mContext.getResources().getDisplayMetrics());
         return dimensionInDp;
     }
 
-
+    public void setNumsOfColumns(int num) {
+        numOfColumns = num;
+    }
 
     public static interface BoardResizeListener {
         public void onBoardResized(GridView board, int height, int width, int area);

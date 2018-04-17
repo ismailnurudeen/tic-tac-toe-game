@@ -1,44 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_menu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/dark_texture_background"
+android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="50dp"
-        android:text="Play as :"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/single_player_btn"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/colorPrimary"
-        android:onClick="handleClicks"
-        android:text="Single Player"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/multi_player_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:onClick="handleClicks"
-        android:text="Multi Player"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp" />
+        <ImageView
+            android:id="@+id/single_player_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="36dp"
+            android:backgroundTintMode="src_over"
+            android:onClick="handleClicks"
+            android:text="@string/single_player"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:tint="@android:color/holo_blue_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_person_black_24dp" />
+
+        <ImageView
+            android:id="@+id/multi_player_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="68dp"
+            android:onClick="handleClicks"
+            android:text="@string/multi_player"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:tint="@android:color/holo_blue_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:srcCompat="@drawable/ic_people_black_24dp" />
+
+        <ImageView
+            android:id="@+id/settings_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:onClick="handleClicks"
+            android:text="@string/multi_player"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:tint="@android:color/holo_green_light"
+            app:layout_constraintEnd_toStartOf="@+id/share_btn"
+            app:layout_constraintStart_toEndOf="@+id/single_player_btn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_settings_black_48dp" />
+
+        <ImageView
+            android:id="@+id/about_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="8dp"
+            android:onClick="handleClicks"
+            android:text="@string/multi_player"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:tint="@android:color/holo_green_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/exit_btn"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/multi_player_btn"
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintVertical_bias="0.896"
+            app:srcCompat="@drawable/ic_info_black_24dp" />
+
+        <ImageView
+            android:id="@+id/share_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginTop="36dp"
+            android:onClick="handleClicks"
+            android:text="@string/multi_player"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:tint="@android:color/holo_red_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_share_black_48dp" />
+
+        <ImageView
+            android:id="@+id/exit_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginTop="8dp"
+            android:onClick="handleClicks"
+            android:text="@string/multi_player"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:tint="@android:color/holo_red_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:srcCompat="@drawable/ic_power_off_black_24dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="casual"
+            android:text="Single Player"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/single_player_btn" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="casual"
+            android:text="About"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView11"
+            app:layout_constraintHorizontal_bias="0.44"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/about_btn"
+            app:layout_constraintVertical_bias="0.444" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:fontFamily="casual"
+            android:text="Share"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/share_btn" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="casual"
+            android:text="MultiPlayer"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/multi_player_btn" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="casual"
+            android:text="Exit"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exit_btn" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="casual"
+            android:text="Settings"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintHorizontal_bias="0.392"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/settings_btn" />
+
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

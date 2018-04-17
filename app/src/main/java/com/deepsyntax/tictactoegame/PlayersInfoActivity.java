@@ -1,16 +1,13 @@
 package com.deepsyntax.tictactoegame;
 
-import android.app.*;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.*;
-import android.content.*;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
 
 public class PlayersInfoActivity extends AppCompatActivity implements FragmentsInterface{
 	public static String PLAYER_1_TAG="Player One";
@@ -36,7 +33,7 @@ public class PlayersInfoActivity extends AppCompatActivity implements FragmentsI
 		prefs=getSharedPreferences(PREF_NAME,MODE_PRIVATE);
 		editor=prefs.edit();
 		
-		manager = getFragmentManager();
+		manager = getSupportFragmentManager();
 		transaction = manager.beginTransaction();
 
 		transaction.replace(R.id.activity_players_infoFrameLayout, new PlayersInfoFragment(), PLAYER_1_TAG);
@@ -48,8 +45,9 @@ public class PlayersInfoActivity extends AppCompatActivity implements FragmentsI
 	public void OnPlayerSettingsComplete(ArrayList<String> playerNames){
 		InitialSettingsFragment initialSettings=new InitialSettingsFragment();
 		initialSettings.newInstance(playerNames);
-		getFragmentManager()
+		getSupportFragmentManager()
 			.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
 			.replace(R.id.activity_players_infoFrameLayout, initialSettings, "InitialSettings")
 			.commit();
 	}

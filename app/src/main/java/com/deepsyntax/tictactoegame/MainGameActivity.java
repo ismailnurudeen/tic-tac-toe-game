@@ -8,11 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -29,15 +32,18 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     private String player1Name, player2Name;
     private GameControl gameControl;
     private boolean isSmallBoard = true;
-    private Button restartGameBtn, endGameBtn;
+    private ImageView restartGameBtn, endGameBtn, zoomInBtn, zoomOutBtn,settingsBtn;
     private CircularImageView player1Image;
     private CircularImageView player2Image;
     private boolean isPlayerTurn;
     private int numsOfBoxes;
+    private Board board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game_main);
 
         initializeViews();
@@ -54,14 +60,20 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         numsOfBoxes = extras.getInt("NUMBER_OF_GRIDS", 9);
         int player1Symbol = extras.getInt("PLAYER_SYMBOL", R.drawable.x);
         int player2Symbol = player1Symbol == R.drawable.x ? R.drawable.o : R.drawable.x;
-        Game game = new Game(this);
-        game.setPlayersSymbol(player1Symbol, player2Symbol);
 
+        board = new Board(this);
+        board.setNumsOfColumns(3);
+        board.setBoxArea(80, 80);
+        gameBoard.getLayoutParams().width = board.pixelsToDips(80 * 3);
         boardAdapter = new GameBoardAdapter(this, Board.generateBoxes(numsOfBoxes));
         if (numsOfBoxes > 9) {
             gameBoard.setNumColumns(5);
-            boardAdapter.setBoxArea(65, 65);
+            board.setNumsOfColumns(5);
+            board.setBoxArea(50, 50);
+            gameBoard.getLayoutParams().width = board.pixelsToDips(50 * 5);
         }
+        Game game = new Game(this);
+        game.setPlayersSymbol(player1Symbol, player2Symbol);
 
         gameBoard.setAdapter(boardAdapter);
         gameControl = new GameControl(this, gameBoard, boardAdapter);
@@ -75,12 +87,16 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     public void onItemClick(AdapterView<?> av, View v, int position, long id) {
         if (isSinglePlayer && gameControl.isComPlaying()) return;
         if (!gameControl.play(position, v)) return;
-        if (isSinglePlayer && gameControl.getPlayedPosition().size() < 9)
+        if (isSinglePlayer && gameControl.getPlayedPosition().size() < numsOfBoxes)
             gameControl.computerPlay(v);
     }
 
     @Override
     public void onClick(View v) {
+        Board board = new Board(this);
+        board.setNumsBoxes(Board.generateBoxes(numsOfBoxes));
+        int size = numsOfBoxes > 9 ? 60 : 100;
+        gameBoard.setOnTouchListener(null);
         switch (v.getId()) {
             case R.id.end_game_btn:
                 endGame();
@@ -89,6 +105,17 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
                 gameControl.restartGame();
                 gameControl.resetScore();
                 break;
+            case R.id.zoom_in_btn:
+                board.resizeBoard(gameBoard, size, size);
+                break;
+            case R.id.zoom_out_btn:
+                board.resetBoardSize(gameBoard);
+                break;
+            case R.id.main_game_settings_btn:
+                Toast.makeText(this,"Settings",Toast.LENGTH_SHORT);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                settingsIntent.putExtra(SettingsActivity.SETTINGS_TO_SHOW, 1);
+                startActivity(settingsIntent);
         }
     }
 
@@ -102,12 +129,18 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         player2Image = findViewById(R.id.player2_img);
         restartGameBtn = findViewById(R.id.restart_game_btn);
         endGameBtn = findViewById(R.id.end_game_btn);
+        zoomInBtn = findViewById(R.id.zoom_in_btn);
+        zoomOutBtn = findViewById(R.id.zoom_out_btn);
+        settingsBtn=findViewById(R.id.main_game_settings_btn);
         gameBoard = findViewById(R.id.game_board);
 
 
         gameBoard.setOnItemClickListener(this);
         restartGameBtn.setOnClickListener(this);
         endGameBtn.setOnClickListener(this);
+        zoomInBtn.setOnClickListener(this);
+        zoomOutBtn.setOnClickListener(this);
+        settingsBtn.setOnClickListener(this);
     }
 
     private void displayPlayerInfo() {
@@ -126,7 +159,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
 
     @Override
     public void onViewBoard(boolean isViewing) {
-        enableBtns(isViewing);
+
     }
 
     @Override
@@ -138,7 +171,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     protected void onDestroy() {
         // TODO: Implement this method
         super.onDestroy();
-        new Board(this).resetBoardSize(gameBoard);
+        board.setBoxArea(80, 80);
     }
 
     @Override
@@ -151,7 +184,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.resize_board:
-                Board board = new Board(this);
+                board = new Board(this);
                 board.setNumsBoxes(Board.generateBoxes(numsOfBoxes));
                 int size = numsOfBoxes > 9 ? 50 : 80;
                 if (isSmallBoard) {
@@ -170,7 +203,17 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         }
         return super.onOptionsItemSelected(item);
     }
-
+int exitCount=0;
+    @Override
+    public void onBackPressed() {
+        if (exitCount < 1) {
+            Toast.makeText(this, "press back again to exit app", Toast.LENGTH_SHORT).show();
+            exitCount++;
+            return;
+        }
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
 }
 
 	

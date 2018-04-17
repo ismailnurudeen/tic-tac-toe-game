@@ -1,13 +1,18 @@
 package com.deepsyntax.tictactoegame;
-import android.app.*;
-import android.content.*;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.widget.*;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class PlayersInfoFragment extends Fragment implements OnClickListener{
 

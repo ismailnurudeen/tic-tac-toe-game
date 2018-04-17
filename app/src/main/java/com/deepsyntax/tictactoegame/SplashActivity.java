@@ -8,9 +8,10 @@ import android.view.animation.*;
 
 public class SplashActivity extends AppCompatActivity
 {
-	private final long SPLASH_DURATION=3500L;
+	private final long SPLASH_DURATION=4000L;
 	private TextView ticTv,tacTv,toeTv,letsPlayTv;
-	private Animation firstAnim,secondAnim,thirdAnim,fourthAnim;
+	ImageView splashLogo;
+	private Animation scaleAnim,slideAnim,bounceAnim;
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		// TODO: Implement this method
@@ -21,11 +22,12 @@ public class SplashActivity extends AppCompatActivity
 		ticTv = findViewById(R.id.splashTextView_tic);
 		tacTv = findViewById(R.id.splashTextView_tac);
 		toeTv = findViewById(R.id.splashTextView_toe);
+        splashLogo = findViewById(R.id.splash_logo);
 		letsPlayTv = findViewById(R.id.splashTextView_lets_play);
 
-		firstAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-		secondAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_anim);
-		thirdAnim=AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in);
+		scaleAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_anim);
+		slideAnim=AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in);
+		bounceAnim=AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce);
 		showSplashAnimation();
 		
 		Handler delay=new Handler(Looper.getMainLooper());
@@ -38,16 +40,16 @@ public class SplashActivity extends AppCompatActivity
 
 			},SPLASH_DURATION);
 	}
-	private void showSplashAnimation(){
-		firstAnim.setDuration(2000L);
-		secondAnim.setDuration(1500L);
-		thirdAnim.setDuration(1500L);
+	private void showSplashAnimation(){;
+		scaleAnim.setDuration(1500L);
+		bounceAnim.setDuration(800);
+		slideAnim.setDuration(1500L);
 
-		ticTv.setAnimation(secondAnim);
-		tacTv.setAnimation(secondAnim);
-		toeTv.setAnimation(secondAnim);
 
-		letsPlayTv.setAnimation(thirdAnim);
-		//letsPlayTv.setAnimation(firstAnim);
+		ticTv.setAnimation(scaleAnim);
+		tacTv.setAnimation(scaleAnim);
+		toeTv.setAnimation(scaleAnim);
+        splashLogo.setAnimation(bounceAnim);
+		letsPlayTv.setAnimation(slideAnim);
 	}
 }

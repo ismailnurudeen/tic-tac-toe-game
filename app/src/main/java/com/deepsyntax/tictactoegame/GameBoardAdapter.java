@@ -1,6 +1,8 @@
 package com.deepsyntax.tictactoegame;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,6 @@ public class GameBoardAdapter extends ArrayAdapter {
     private int[] mPlayedMoves;
     private Board mBoard;
     private Context mContext;
-    private static int boxHeight = 100;
-    private static int boxWidth = 100;
-
 
     public GameBoardAdapter(Context ctx, ArrayList boxes) {
         super(ctx, 0, boxes);
@@ -42,8 +41,10 @@ public class GameBoardAdapter extends ArrayAdapter {
         mBoard.setNumsBoxes(boxes);
     }
 
+    @NonNull
+    @SuppressLint("ViewHolder")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.game_box, parent, false);
         if (mWinPattern != null) {
             mBoard.displayPattern(convertView, position);
@@ -53,15 +54,10 @@ public class GameBoardAdapter extends ArrayAdapter {
 
         ImageView box = convertView.findViewById(R.id.game_box);
         mBoard.setBox(box);
-        box.getLayoutParams().height = mBoard.pixelsToDips(boxHeight);
-        box.getLayoutParams().width = mBoard.pixelsToDips(boxWidth);
+        box.getLayoutParams().height = mBoard.pixelsToDips(Board.getBoxHeight());
+        box.getLayoutParams().width = mBoard.pixelsToDips(Board.getBoxWidth());
         mBoard.drawBoardLines(convertView, position);
 
         return convertView;
-    }
-
-    public void setBoxArea(int height, int width) {
-        boxHeight = height;
-        boxWidth = width;
     }
 }
