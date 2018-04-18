@@ -3,13 +3,12 @@ package com.deepsyntax.tictactoegame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -22,9 +21,17 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import java.util.ArrayList;
 
 
-public class MainGameActivity extends AppCompatActivity implements OnItemClickListener, OnClickListener, GameControl.ComInterface {
-    private SharedPreferences prefs;
+public class MainGameActivity extends AppCompatActivity implements OnItemClickListener, OnClickListener, GameControl.ComInterface, SharedPreferences.OnSharedPreferenceChangeListener {
+    private SharedPreferences mainSettingsPrefs;
+    private SharedPreferences gamePlayPrefs;
     private SharedPreferences.Editor editor;
+    public static final String MAIN_SETTINGS_PREF = "pref_general";
+    public static final String IN_GAME_PREF = "pref_gameplay";
+    public static String SOUND_PREF_KEY = "click_sound";
+    public static String DIFFICULTY_PREF_KEY = "game_difficulty";
+    public static String THEME_PREF_KEY = "game_theme";
+    public static String BOARD_TYPE_PREF_KEY = "board_type";
+
     private boolean isSinglePlayer;
     private GridView gameBoard;
     private GameBoardAdapter boardAdapter;
@@ -32,20 +39,24 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     private String player1Name, player2Name;
     private GameControl gameControl;
     private boolean isSmallBoard = true;
-    private ImageView restartGameBtn, endGameBtn, zoomInBtn, zoomOutBtn,settingsBtn;
+    private ImageView restartGameBtn, endGameBtn, zoomInBtn, zoomOutBtn, settingsBtn;
     private CircularImageView player1Image;
     private CircularImageView player2Image;
     private boolean isPlayerTurn;
     private int numsOfBoxes;
     private Board board;
+    private boolean soundPref;
+    int gameDifficultyPref, gameThemePref, boardTypePref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game_main);
-
+        mainSettingsPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mainSettingsPrefs.registerOnSharedPreferenceChangeListener(this);
         initializeViews();
 
         Bundle extras = getIntent().getExtras();
@@ -54,7 +65,6 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         ArrayList<String> nameList = extras.getStringArrayList("PLAYER_NAMES");
         player1Name = isSinglePlayer ? "You" : nameList.get(0);
         player2Name = isSinglePlayer ? "Computer" : nameList.get(1);
-        displayPlayerInfo();
 
         int numsRound = extras.getInt("NUMBER_OF_ROUNDS", 0);
         numsOfBoxes = extras.getInt("NUMBER_OF_GRIDS", 9);
@@ -81,6 +91,9 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         gameControl.setNumberOfRounds(numsRound);
         gameControl.resetScore();
         gameControl.showActivePlayer(player1Image);
+
+        initCurrentSettings(mainSettingsPrefs);
+        displayPlayerInfo();
     }
 
     @Override
@@ -112,7 +125,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
                 board.resetBoardSize(gameBoard);
                 break;
             case R.id.main_game_settings_btn:
-                Toast.makeText(this,"Settings",Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT);
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 settingsIntent.putExtra(SettingsActivity.SETTINGS_TO_SHOW, 1);
                 startActivity(settingsIntent);
@@ -131,7 +144,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         endGameBtn = findViewById(R.id.end_game_btn);
         zoomInBtn = findViewById(R.id.zoom_in_btn);
         zoomOutBtn = findViewById(R.id.zoom_out_btn);
-        settingsBtn=findViewById(R.id.main_game_settings_btn);
+        settingsBtn = findViewById(R.id.main_game_settings_btn);
         gameBoard = findViewById(R.id.game_board);
 
 
@@ -141,6 +154,15 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         zoomInBtn.setOnClickListener(this);
         zoomOutBtn.setOnClickListener(this);
         settingsBtn.setOnClickListener(this);
+    }
+
+    private void initCurrentSettings(SharedPreferences prefs) {
+        soundPref = prefs.getBoolean(SOUND_PREF_KEY, true);
+        boardTypePref = prefs.getInt(BOARD_TYPE_PREF_KEY, 0);
+        gameThemePref = prefs.getInt(THEME_PREF_KEY, 0);
+        gameDifficultyPref = prefs.getInt(DIFFICULTY_PREF_KEY, 1);
+        gameControl.enableSound(soundPref);
+        gameControl.setDifficultyLevel(gameDifficultyPref);
     }
 
     private void displayPlayerInfo() {
@@ -203,7 +225,9 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         }
         return super.onOptionsItemSelected(item);
     }
-int exitCount=0;
+
+    int exitCount = 0;
+
     @Override
     public void onBackPressed() {
         if (exitCount < 1) {
@@ -213,6 +237,11 @@ int exitCount=0;
         }
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        initCurrentSettings(sharedPreferences);
     }
 }
 

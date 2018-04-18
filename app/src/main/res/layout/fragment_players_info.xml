@@ -9,7 +9,7 @@
     tools:ignore="ExtraText">
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/initial_settings_current_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -17,7 +17,8 @@
         android:fontFamily="casual"
         android:text="Player One"
         android:textColor="@color/textColorPrimary"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/fragmentplayerImageView"
@@ -56,13 +57,13 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="16dp"
         android:background="@android:drawable/editbox_background"
-        android:backgroundTint="@color/cardview_dark_background"
+        android:backgroundTint="#B5FFB300"
         android:ems="10"
         android:fontFamily="casual"
-        android:hint="Player 1"
+        android:hint="(Player 1 name)"
         android:inputType="textPersonName"
         android:textColor="@color/textColorPrimary"
-        android:textColorHint="#C6C6C6" />
+        android:textColorHint="@android:color/black" />
 
     <Button
         android:id="@+id/fragment_playerinfo_next_btn"

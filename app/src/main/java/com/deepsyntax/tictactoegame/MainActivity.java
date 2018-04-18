@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsInterfac
                 startActivity(settingsIntent);
                 break;
             case R.id.about_btn:
+                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.share_btn:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);

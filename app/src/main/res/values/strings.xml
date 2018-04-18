@@ -12,7 +12,7 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_click_sound">Enable click sound</string>
+    <string name="pref_title_click_sound">Game Sound</string>
     <string name="pref_description_click_sound">Play sound when box is clicked
     </string>
 
@@ -55,5 +55,20 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+    <string name="about_app">
+        This is the final Project for ALC 2.0 Android Beginner Track (Take-a-climb-challenge).\n\nIt is an Intelligent Tic-tac-toe
+game that supports playing with the computer(singleplayer) and playing with another person (Multiplayer).
+The game has simple Artificial Intelligence implementations which makes the Computer play the game of tictactoe perfectly.
+    </string>
+    <string name="about_developer">
+        Ismail Nurudeen is an Intelligent Android Developer,Web Developer and a Teen Development Advocate.
+    He has developed a few problem solving apps and is currently developing more...\n Read More about him at:
+    </string>
+    <string name="about_game">
+        Tic-tac-tac is a Two Player game played on a 3x3 or 5x5 grid.
+        the first player who succeeds in playing three of his mark/symbol in a horizontal,vertical or diagonal row wins the game.
+    </string>
+    <string name="game_controls"></string>
+    <string name="learn_more_wikipedia">Learn more at :\\nhttps://wikipedia.org/Tic-tac-toe</string>
 
 </resources>

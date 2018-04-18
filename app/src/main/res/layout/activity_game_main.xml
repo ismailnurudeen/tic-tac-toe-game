@@ -224,6 +224,14 @@
             app:srcCompat="@drawable/ic_reply_black_32dp" />
 
         <ImageView
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:tint="@color/colorAccent"
+            app:srcCompat="@drawable/ic_help_outline_black_24dp" />
+
+        <ImageView
             android:id="@+id/main_game_settings_btn"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
@@ -231,26 +239,5 @@
             android:scaleType="centerInside"
             android:tint="@android:color/holo_green_dark"
             app:srcCompat="@drawable/ic_settings_black_32dp" />
-
-
-        <!--<Button-->
-        <!--android:id="@+id/restart_game_btn"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginEnd="5dp"-->
-        <!--android:layout_marginStart="10dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="Reset"-->
-        <!--tools:ignore="ButtonStyle" />-->
-
-        <!--<Button-->
-        <!--android:id="@+id/end_game_btn"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginEnd="10dp"-->
-        <!--android:layout_marginStart="5dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="@string/end_game"-->
-        <!--tools:ignore="ButtonStyle,NestedWeights" />-->
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

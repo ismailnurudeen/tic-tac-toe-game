@@ -23,7 +23,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="serif-monospace"
-                android:text="About"
+                android:text="Help"
                 android:textColor="@color/colorAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -45,7 +45,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="0dp"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/about_app"
+                android:text="@string/about_game"
                 android:textColor="#f5f5f5"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="serif-monospace"
-                android:text="Developer"
+                android:text="Game Controls"
                 android:textColor="@color/colorAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -92,54 +92,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif"
-                android:text="https://elnuru247.github.io"
+                android:text="@string/learn_more_wikipedia"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="18sp" />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="32dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/dividerVertical" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:tint="#E0E0E0"
-                android:tooltipText="Give us a feedback"
-                app:srcCompat="@drawable/ic_feedback_black_24dp" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-                android:tint="#E0E0E0"
-                android:tooltipText="Report a bug"
-                app:srcCompat="@drawable/ic_bug_report_black_24dp" />
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-                android:tint="#E0E0E0"
-                android:tooltipText="share with others"
-                app:srcCompat="@drawable/ic_share_black_48dp" />
-        </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

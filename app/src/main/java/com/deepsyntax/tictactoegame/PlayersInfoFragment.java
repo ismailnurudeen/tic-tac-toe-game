@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class PlayersInfoFragment extends Fragment implements OnClickListener{
 	int counter=0;
 	private ImageView playerImagePreview;
 	private Button uploadImageBtn;
+	private TextView currentPlayerSettingsLabel;
 
 
 	@Override
@@ -47,6 +51,7 @@ public class PlayersInfoFragment extends Fragment implements OnClickListener{
 		nameEditText = view.findViewById(R.id.fragment_player_name_et);
 		playerImagePreview = view.findViewById(R.id.fragmentplayerImageView);
 		uploadImageBtn = view.findViewById(R.id.fragment_player_upload_image_btn);
+		currentPlayerSettingsLabel=view.findViewById(R.id.initial_settings_current_player);
         nextBtn.setOnClickListener(this);
        uploadImageBtn.setOnClickListener(this);
 	}
@@ -76,7 +81,11 @@ public class PlayersInfoFragment extends Fragment implements OnClickListener{
     }
 	private void resetFields(){
 		nameEditText.setText("");
-		nameEditText.setHint("Player 2");
+		nameEditText.setHint("(Player 2 name)");
+		currentPlayerSettingsLabel.setText("Player Two");
+		Animation slideIn = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in);
+		slideIn.setDuration(1000);
+		currentPlayerSettingsLabel.setAnimation(slideIn);
 	}
 
     private void showSelectedImage(Bitmap imgBitmap){

@@ -8,12 +8,11 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -24,8 +23,6 @@ import android.widget.Toast;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class GameControl implements OnClickListener {
     private Context mContext;
@@ -54,6 +51,9 @@ public class GameControl implements OnClickListener {
 
     private boolean quickView;
     private int position;
+    private boolean canPlaySound;
+    private int difficultyLevel;
+    private int boardType;
 
     public GameControl(Context ctx) {
         this.mContext = ctx;
@@ -83,7 +83,8 @@ public class GameControl implements OnClickListener {
     public boolean play(int position, View v) {
         if (playedPosition.contains(position) || gameOver)
             return false;
-        playSound(R.raw.tink);
+        if (canPlaySound) playSound(R.raw.tink);
+
         playedPosition.add(position);
         displaySymbol(v, position);
         checkGameStatus(position);
@@ -129,12 +130,19 @@ public class GameControl implements OnClickListener {
 
     @SuppressLint("WrongConstant")
     public void computerPlay(View v) {
-        if (Board.numOfColumns > 3) {
-            position = game.machinePlayer();
-                    //game.minimax(game.getAllMoves(), game.getOPlayerSymbol());
-        } else {
-            position = game.myAi();
+        switch (difficultyLevel) {
+            case 0:
+                position = game.machinePlayer();
+                break;
+            case 1:
+                position = game.minimax(game.getAllMoves(), game.getOPlayerSymbol());
+                break;
+            case 2:
+                position = game.myAi();
+
         }
+        if (Board.numOfColumns > 3) position = game.machinePlayer();
+
         Toast.makeText(mContext, "Thinking...", 10).show();
 
         comPlaying = true;
@@ -183,94 +191,7 @@ public class GameControl implements OnClickListener {
         showActivePlayer(player1ImageView);
     }
 
-    public void showSweetWinDialog(String status, String msg) {
-        final SweetAlertDialog sweetDialog = new SweetAlertDialog(mContext, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-        sweetDialog.setCustomImage(currentPlayer);
-
-        builder = new AlertDialog.Builder(mContext);
-
-        if (numsRound > 0 && !(currentRound > numsRound)) {
-            sweetDialog.setTitleText("Round " + currentRound + "/" + numsRound);
-            builder.setTitle("Round " + currentRound + "/" + numsRound);
-            currentRound++;
-
-            if (currentRound > numsRound) {
-                sweetDialog.setConfirmText("Game Over")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                sweetDialog.dismiss();
-                                showGameOverDialog();
-                            }
-                        });
-            } else {
-                sweetDialog.setConfirmText("Continue")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                restartGame();
-                                sweetDialog.dismiss();
-                            }
-                        });
-                sweetDialog.setCancelText("View Board")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                sweetDialog.dismiss();
-                                hideSweetDialog(sweetDialog);
-                            }
-                        });
-            }
-        } else {
-            sweetDialog.setTitleText(status);
-            sweetDialog.setConfirmText("Continue")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            restartGame();
-                            sweetDialog.dismiss();
-                        }
-                    });
-            sweetDialog.setCancelText("View Board")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetDialog.dismiss();
-                            hideSweetDialog(sweetDialog);
-                        }
-                    });
-        }
-        sweetDialog.setContentText(msg)
-                .setCancelable(false);
-        sweetDialog.show();
-    }
-
-    public void hideSweetDialog(final SweetAlertDialog dialog) {
-        comInterface.onViewBoard(false);
-        gameBoard.setOnTouchListener(new OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                dialog.show();
-                comInterface.onViewBoard(true);
-                gameBoard.setOnTouchListener(null);
-                return false;
-            }
-        });
-    }
-
-    public void showWinDialog(String status, String msg) {
-        //Snackbar.make(gameBoard, "Round " + currentRound + "/" + numsRound + " " + msg, Snackbar.LENGTH_INDEFINITE).setAction("Continue", new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        }).show();
+    public void showWinDialog(final String status, final String msg) {
 
         builder = new AlertDialog.Builder(mContext);
 
@@ -293,7 +214,7 @@ public class GameControl implements OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int p2) {
                         dialog.dismiss();
-                        delayDialog(builder);
+                        delayDialog(builder, msg);
                     }
                 });
             } else {
@@ -302,7 +223,7 @@ public class GameControl implements OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int p2) {
                         dialog.dismiss();
-                        delayDialog(builder);
+                        delayDialog(builder, msg);
                     }
                 });
                 builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
@@ -330,7 +251,7 @@ public class GameControl implements OnClickListener {
                 @Override
                 public void onClick(DialogInterface dialog, int p2) {
                     dialog.dismiss();
-                    delayDialog(builder);
+                    delayDialog(builder, msg);
                 }
             });
             builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
@@ -357,20 +278,33 @@ public class GameControl implements OnClickListener {
         builder.create().show();
     }
 
-    public void delayDialog(final AlertDialog.Builder builder) {
+    public void delayDialog(final AlertDialog.Builder builder, String msg) {
         comInterface.onViewBoard(false);
-        gameBoard.setOnTouchListener(new OnTouchListener() {
-
+        //Snackbar snack=new Snackbar();
+        if (numsRound > 0) msg = "Round " + currentRound + "/" + numsRound + " " + msg;
+        String snackBtnTxt = currentRound > numsRound ? "Game Over" : "Continue";
+        Snackbar.make(gameBoard, msg, Snackbar.LENGTH_INDEFINITE).setAction(snackBtnTxt, new OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                builder.create();
-                builder.show();
-                comInterface.onViewBoard(true);
-                gameBoard.setOnTouchListener(null);
-                quickView = true;
-                return false;
+            public void onClick(View view) {
+                if (currentRound > numsRound) {
+                    showGameOverDialog();
+                } else {
+                    restartGame();
+                }
             }
-        });
+        }).show();
+//        gameBoard.setOnTouchListener(new OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent e) {
+//                builder.create();
+//                builder.show();
+//                comInterface.onViewBoard(true);
+//                gameBoard.setOnTouchListener(null);
+//                quickView = true;
+//                return false;
+//            }
+//        });
     }
 
     public void showGameOverDialog() {
@@ -458,6 +392,18 @@ public class GameControl implements OnClickListener {
 
     public boolean gameOver() {
         return gameOver;
+    }
+
+    public void enableSound(boolean state) {
+        canPlaySound = state;
+    }
+
+    public void setDifficultyLevel(int level) {
+        difficultyLevel = level;
+    }
+
+    public void setBoardType(int type) {
+        boardType = type;
     }
 
     public interface ComInterface {

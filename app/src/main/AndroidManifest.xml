@@ -36,6 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.deepsyntax.tictactoegame.MainGameActivity" />
         </activity>
+        <activity android:name=".AboutActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -3,7 +3,8 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="click_sound"
-        android:summary="@string/pref_description_click_sound"
+        android:summaryOn="On"
+        android:summaryOff="Off"
         android:title="@string/pref_title_click_sound" />
 
 
