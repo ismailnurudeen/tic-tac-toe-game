@@ -280,10 +280,10 @@ public class GameControl implements OnClickListener {
 
     public void delayDialog(final AlertDialog.Builder builder, String msg) {
         comInterface.onViewBoard(false);
-        //Snackbar snack=new Snackbar();
+        Snackbar snack=new Snackbar(gameBoard, msg, Snackbar.LENGTH_INDEFINITE);
         if (numsRound > 0) msg = "Round " + currentRound + "/" + numsRound + " " + msg;
         String snackBtnTxt = currentRound > numsRound ? "Game Over" : "Continue";
-        Snackbar.make(gameBoard, msg, Snackbar.LENGTH_INDEFINITE).setAction(snackBtnTxt, new OnClickListener() {
+        snack.setAction(snackBtnTxt, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (currentRound > numsRound) {
@@ -309,7 +309,6 @@ public class GameControl implements OnClickListener {
 
     public void showGameOverDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("GAME OVER");
         View dialogView = LayoutInflater.from(mContext).inflate(R.layout.gameover_dialog, null);
         TextView player1DialogName = dialogView.findViewById(R.id.dialog_player1_label);
         TextView player2DialogName = dialogView.findViewById(R.id.dialog_player2_label);

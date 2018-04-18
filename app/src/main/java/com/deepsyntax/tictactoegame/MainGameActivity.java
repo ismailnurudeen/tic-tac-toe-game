@@ -1,10 +1,12 @@
 package com.deepsyntax.tictactoegame;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +49,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     private Board board;
     private boolean soundPref;
     int gameDifficultyPref, gameThemePref, boardTypePref;
+    private ImageView helpBtn;
 
 
     @Override
@@ -110,6 +113,8 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         board.setNumsBoxes(Board.generateBoxes(numsOfBoxes));
         int size = numsOfBoxes > 9 ? 60 : 100;
         gameBoard.setOnTouchListener(null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog  gameOverDialog = builder.create();;
         switch (v.getId()) {
             case R.id.end_game_btn:
                 endGame();
@@ -123,6 +128,17 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
                 break;
             case R.id.zoom_out_btn:
                 board.resetBoardSize(gameBoard);
+                break;
+            case R.id.main_game_help_btn:
+                View dialogView = LayoutInflater.from(this).inflate(R.layout.dailog_help, null);
+                builder.setView(dialogView);
+                builder.setIcon(R.drawable.ic_help_outline_black_24dp);
+                builder.setCancelable(true);
+                gameOverDialog.show();
+                dialogView.findViewById(R.id.help_dailog_ok).setOnClickListener(this);
+                break;
+            case R.id.help_dailog_ok:
+                gameOverDialog.dismiss();
                 break;
             case R.id.main_game_settings_btn:
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT);
@@ -145,6 +161,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         zoomInBtn = findViewById(R.id.zoom_in_btn);
         zoomOutBtn = findViewById(R.id.zoom_out_btn);
         settingsBtn = findViewById(R.id.main_game_settings_btn);
+        helpBtn = findViewById(R.id.main_game_help_btn);
         gameBoard = findViewById(R.id.game_board);
 
 
@@ -153,6 +170,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         endGameBtn.setOnClickListener(this);
         zoomInBtn.setOnClickListener(this);
         zoomOutBtn.setOnClickListener(this);
+        helpBtn.setOnClickListener(this);
         settingsBtn.setOnClickListener(this);
     }
 
@@ -231,7 +249,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     @Override
     public void onBackPressed() {
         if (exitCount < 1) {
-            Toast.makeText(this, "press back again to exit app", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "press back again to exit current game", Toast.LENGTH_SHORT).show();
             exitCount++;
             return;
         }

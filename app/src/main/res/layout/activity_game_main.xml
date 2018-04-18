@@ -224,6 +224,7 @@
             app:srcCompat="@drawable/ic_reply_black_32dp" />
 
         <ImageView
+            android:id="@+id/main_game_help_btn"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
