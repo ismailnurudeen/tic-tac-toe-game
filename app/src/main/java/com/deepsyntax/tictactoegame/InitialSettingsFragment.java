@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
@@ -24,6 +25,9 @@ public class InitialSettingsFragment extends Fragment implements OnClickListener
     private LinearLayout secondarySettingsLayout;
     private Spinner boardTypeSpinner;
     private NumberPicker roundsPicker;
+    private Spinner themesSpinner;
+    private ImageView symbolPicker_O, symbolPicker_X;
+    private Themes themes;
 
     public InitialSettingsFragment() {
 
@@ -45,10 +49,15 @@ public class InitialSettingsFragment extends Fragment implements OnClickListener
         defautSettingsCheck.setOnClickListener(this);
         secondarySettingsLayout = view.findViewById(R.id.secondary_settings_layout);
         boardTypeSpinner = view.findViewById(R.id.fragment_initial_game_settings_board_type);
+        themesSpinner = view.findViewById(R.id.initial_game_settings_theme);
+
         roundsPicker = view.findViewById(R.id.initial_game_settings_rounds);
         roundsPicker.setMaxValue(100);
         roundsPicker.setMinValue(1);
         roundsPicker.setWrapSelectorWheel(false);
+        symbolPicker_O = view.findViewById(R.id.initial_o_symbol);
+        symbolPicker_X = view.findViewById(R.id.initial_x_symbol);
+        themes = new Themes(getContext());
         RadioGroup symbolPicker = view.findViewById(R.id.symbol_picker);
         symbolPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -60,6 +69,17 @@ public class InitialSettingsFragment extends Fragment implements OnClickListener
                 }
             }
         });
+        themesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                themes.setInitialSettingsIcons(symbolPicker_X, symbolPicker_O, i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -68,13 +88,15 @@ public class InitialSettingsFragment extends Fragment implements OnClickListener
             case R.id.fragment_initial_game_settings_next_btn:
                 FragmentsInterface fragInterface = (FragmentsInterface) getActivity();
                 int rounds = roundsPicker.getValue();
-
                 int boardType = boardTypeSpinner.getSelectedItemPosition() == 0 ? 9 : 25;
-//                TODO: change this value to the players images
-                ArrayList<byte[]> imageList = new ArrayList();
+                int theme = themesSpinner.getSelectedItemPosition();
 
 //                Passing settings value to the host activity <@PlayerInfoActivity>
-                fragInterface.OnGameSettingsComplete(playerNames, imageList, playerSymbol, boardType, rounds);
+                if (defautSettingsCheck.isChecked()) {
+                    fragInterface.OnGameSettingsComplete(playerNames, -1, R.drawable.x, -1, rounds);
+                } else {
+                    fragInterface.OnGameSettingsComplete(playerNames, theme, playerSymbol, boardType, rounds);
+                }
                 break;
             case R.id.fragment_initial_game_settings_defaut_settings_check:
                 if (defautSettingsCheck.isChecked()) {

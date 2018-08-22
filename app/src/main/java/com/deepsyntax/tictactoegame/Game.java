@@ -75,7 +75,6 @@ public class Game {
     public Game(Context ctx, int boardLength) {
         mContext = ctx;
         mBoardLength = boardLength;
-        //numsBoxes = (int) Math.pow(boardLength, 2);
         moves = new int[(int) Math.pow(boardLength, 2)];
         Log.v("MASTER TICTACTOE", boardLength + "");
         newGame();
@@ -318,7 +317,7 @@ public class Game {
                 return emptyEdge();
             }
             /*else{
-			 return minimax(myMoves, oPlayerSymbol);
+             return minimax(myMoves, oPlayerSymbol);
 			 }*/
             else if (myMoves[winCombo_3x3[0][0]] != -1 && myMoves[winCombo_3x3[2][2]] == -1) {
                 return winCombo_3x3[2][2];

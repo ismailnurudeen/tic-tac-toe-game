@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsInterfac
                 .beginTransaction()
                 .replace(R.id.main_menu_fragment, mainMenuFragment, MAIN_MENU_TAG)
                 .commit();
-        mCurrentTag=MAIN_MENU_TAG;
+        mCurrentTag = MAIN_MENU_TAG;
     }
 
     @Override
@@ -55,14 +55,13 @@ public class MainActivity extends AppCompatActivity implements FragmentsInterfac
                 startActivity(settingsIntent);
                 break;
             case R.id.about_btn:
-                startActivity(new Intent(this,AboutActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.share_btn:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 String msg = "Download this awesome app, MASTER TICTACTOE from the playstore\nI really love the game!";
-                shareIntent.setType("application/apk");
-                shareIntent.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, "com.deepsyntax.ticactoegame");
-                shareIntent.setPackage("cn.xender");
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
                 startActivity(Intent.createChooser(shareIntent, "Share app with..."));
                 break;
             case R.id.exit_btn:
@@ -72,16 +71,19 @@ public class MainActivity extends AppCompatActivity implements FragmentsInterfac
     }
 
     @Override
-    public void OnGameSettingsComplete(ArrayList<String> playerNames, ArrayList<byte[]> playerImage, int playerSymbol, int numBoardGrid, int rounds) {
-        Intent startGame = new Intent(MainActivity.this, MainGameActivity.class);
-        startGame.putExtra("SINGLE_PLAYER", true);
-        startGame.putExtra("PLAYER_SYMBOL", playerSymbol);
-        startGame.putExtra("NUMBER_OF_GRIDS", numBoardGrid);
-        startActivity(startGame);
+    public void OnGameSettingsComplete(ArrayList<String> playerNames, int theme, int playerSymbol, int numBoardGrid, int rounds) {
+        Intent in = new Intent(MainActivity.this, MainGameActivity.class);
+        in.putExtra("SINGLE_PLAYER", true);
+        in.putExtra("NUMBER_OF_ROUNDS", rounds);
+        in.putExtra("PLAYER_SYMBOL", playerSymbol);
+        in.putExtra("NUMBER_OF_GRIDS", numBoardGrid);
+        in.putExtra("THEME_CHOICE", theme);
+        startActivity(in);
+        finish();
     }
 
     @Override
-    public void OnUploadImage() {
+    public void OnUploadImage(int index) {
 
     }
 

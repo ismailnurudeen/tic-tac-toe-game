@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#616161">
+    android:background="#616161"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,7 +87,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/developer_website_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -112,7 +113,7 @@
             android:weightSum="3">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/about_dialog_feedback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -121,7 +122,7 @@
                 app:srcCompat="@drawable/ic_feedback_black_24dp" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/about_dialog_report_bug"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -131,7 +132,7 @@
                 app:srcCompat="@drawable/ic_bug_report_black_24dp" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/about_dialog_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

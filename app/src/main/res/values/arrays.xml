@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_board_type_list_titles">
+        <item>3x3 Grid</item>
+        <item>5x5 Grid</item>
+    </string-array>
+    <string-array name="pref_board_type_values">
+        <item>9</item>
+        <item>25</item>
+    </string-array>
+    <string-array name="pref_difficulty_list_titles">
+        <item>Easy</item>
+        <item>Normal</item>
+        <item>Unbeatable</item>
+    </string-array>
+    <string-array name="pref_difficulty_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="pref_game_theme_list_titles">
+        <item>Minimal Theme</item>
+        <item>Claws Theme</item>
+        <item>Girlie Theme</item>
+        <item>Matrix Theme</item>
+    </string-array>
+    <string-array name="pref_game_theme_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>

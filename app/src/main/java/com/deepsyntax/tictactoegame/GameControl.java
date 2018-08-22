@@ -54,6 +54,7 @@ public class GameControl implements OnClickListener {
     private boolean canPlaySound;
     private int difficultyLevel;
     private int boardType;
+    private boolean isSinglePlayer;
 
     public GameControl(Context ctx) {
         this.mContext = ctx;
@@ -101,7 +102,6 @@ public class GameControl implements OnClickListener {
             gameBox.setImageResource(currentPlayer);
         } else {
             game.addMove(position, currentPlayer);
-//            boxes = Board.generateBoxes((int) Math.pow(gameBoard.getNumColumns(), 2));
             boardAdapter = new GameBoardAdapter(mContext, boxes, currentPlayer, game.getAllMoves());
             gameBoard.setAdapter(boardAdapter);
         }
@@ -111,6 +111,7 @@ public class GameControl implements OnClickListener {
         gameStatus = game.isGameOver(playedPosition, position, currentPlayer);
 
         if (gameStatus == 0) {
+            if (canPlaySound) playSound(R.raw.snare);
             showWinDialog("DRAW", "Perfect play!\tits a draw!");
             boxes = Board.generateBoxes((int) Math.pow(gameBoard.getNumColumns(), 2));
             boardAdapter = new GameBoardAdapter(mContext, boxes, currentPlayer, game.getWinPattern(), game.getAllMoves());
@@ -124,24 +125,28 @@ public class GameControl implements OnClickListener {
             gameBoard.setAdapter(boardAdapter);
             gameOver = true;
             addScore();
+            if (canPlaySound) playSound(R.raw.ride);
             showWinDialog("WINNER!", winner);
         }
     }
 
     @SuppressLint("WrongConstant")
     public void computerPlay(View v) {
-        switch (difficultyLevel) {
-            case 0:
-                position = game.machinePlayer();
-                break;
-            case 1:
-                position = game.minimax(game.getAllMoves(), game.getOPlayerSymbol());
-                break;
-            case 2:
-                position = game.myAi();
-
+        if (Board.numOfColumns > 3) {
+            position = game.machinePlayer();
+        } else {
+            switch (difficultyLevel) {
+                case 0:
+                    position = game.machinePlayer();
+                    break;
+                case 1:
+                    position = game.minimax(game.getAllMoves(), game.getOPlayerSymbol());
+                    break;
+                case 2:
+                    position = game.myAi();
+                    break;
+            }
         }
-        if (Board.numOfColumns > 3) position = game.machinePlayer();
 
         Toast.makeText(mContext, "Thinking...", 10).show();
 
@@ -194,7 +199,11 @@ public class GameControl implements OnClickListener {
     public void showWinDialog(final String status, final String msg) {
 
         builder = new AlertDialog.Builder(mContext);
-
+        if (!status.equalsIgnoreCase("draw")) {
+            builder.setIcon(currentPlayer);
+        } else {
+            builder.setIcon(R.drawable.tictactoe_board);
+        }
         if (numsRound > 0 && !(currentRound > numsRound)) {
             builder.setTitle("Round " + currentRound + "/" + numsRound);
             currentRound++;
@@ -280,7 +289,7 @@ public class GameControl implements OnClickListener {
 
     public void delayDialog(final AlertDialog.Builder builder, String msg) {
         comInterface.onViewBoard(false);
-        Snackbar snack=new Snackbar(gameBoard, msg, Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snack = Snackbar.make(gameBoard, msg, Snackbar.LENGTH_INDEFINITE);
         if (numsRound > 0) msg = "Round " + currentRound + "/" + numsRound + " " + msg;
         String snackBtnTxt = currentRound > numsRound ? "Game Over" : "Continue";
         snack.setAction(snackBtnTxt, new OnClickListener() {
@@ -291,9 +300,10 @@ public class GameControl implements OnClickListener {
                 } else {
                     restartGame();
                 }
+                snack.dismiss();
             }
         }).show();
-//        gameBoard.setOnTouchListener(new OnTouchListener() {
+//       gameBoard.setOnTouchListener(new View.OnTouchListener() {
 //
 //            @Override
 //            public boolean onTouch(View v, MotionEvent e) {
@@ -302,6 +312,7 @@ public class GameControl implements OnClickListener {
 //                comInterface.onViewBoard(true);
 //                gameBoard.setOnTouchListener(null);
 //                quickView = true;
+//                snack.dismiss();
 //                return false;
 //            }
 //        });
@@ -314,6 +325,8 @@ public class GameControl implements OnClickListener {
         TextView player2DialogName = dialogView.findViewById(R.id.dialog_player2_label);
         TextView player1DialogScore = dialogView.findViewById(R.id.dialog_player1_score);
         TextView player2DialogScore = dialogView.findViewById(R.id.dialog_player2_score);
+        ImageView player1DialogImage = dialogView.findViewById(R.id.dialog_player1_Image);
+        ImageView player2DialogImage = dialogView.findViewById(R.id.dialog_player2_Image);
         Button rematchBtn = dialogView.findViewById(R.id.gameover_dialog_rematch);
         Button endGameBtn = dialogView.findViewById(R.id.gameover_dialog_end_game);
         rematchBtn.setOnClickListener(this);
@@ -323,6 +336,17 @@ public class GameControl implements OnClickListener {
         player2DialogName.setText(player2Name);
         player1DialogScore.setText(String.valueOf(player1Score));
         player2DialogScore.setText(String.valueOf(player2Score));
+
+        if (Players.getPlayer1Image() != null) {
+            player1DialogImage.setImageBitmap(Players.getPlayer1Image());
+        } else {
+            player1DialogImage.setImageResource(game.getXPlayerSymbol());
+        }
+        if (Players.getPlayer2Image() != null) {
+            player2DialogImage.setImageBitmap(Players.getPlayer2Image());
+        } else {
+            player2DialogImage.setImageResource(game.getOPlayerSymbol());
+        }
 
         builder.setView(dialogView);
         builder.setCancelable(false);
@@ -409,5 +433,9 @@ public class GameControl implements OnClickListener {
         void onViewBoard(boolean isViewing);
 
         void onEndGame();
+    }
+
+    public void isSinglePlayer(boolean state) {
+        isSinglePlayer = state;
     }
 }

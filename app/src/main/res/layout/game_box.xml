@@ -12,7 +12,7 @@
         android:id="@+id/game_box"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/brick_bg"
+        android:background="@drawable/claws_bg"
         android:padding="3dp"
         android:scaleType="centerCrop"
         tools:srcCompat="@drawable/x" />

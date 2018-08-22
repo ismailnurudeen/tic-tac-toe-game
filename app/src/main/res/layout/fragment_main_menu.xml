@@ -231,7 +231,7 @@
             android:layout_marginStart="20dp"
             android:background="@color/colorPrimary"
             android:onClick="handleClicks"
-            android:text="Single Player"
+            android:text="SinPlayersayer"
             android:textColor="#FFFFFF"
             android:textSize="25sp" />
 
@@ -244,6 +244,6 @@
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:onClick="handleClicks"
-            android:text="Multi Player"
+            android:text="MuPlayersayer"
             android:textColor="#FFFFFF"
             android:textSize="25sp" />-->

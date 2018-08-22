@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:background="#616161">
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:id="@+id/gameover_dialog"
-	android:background="#616161">
+    android:id="@+id/gameover_dialog"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="casual"
         android:gravity="center_horizontal"
         android:text="Game Over"
@@ -28,15 +32,15 @@
         android:layout_marginStart="10dp">
 
         <ImageView
-            android:id="@+id/player1_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/dialog_player1_Image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@mipmap/ic_launcher_round" />
 
         <ImageView
-            android:id="@+id/player2_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/dialog_player2_Image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:src="@mipmap/ic_launcher_round" />
 
@@ -44,7 +48,7 @@
             android:id="@+id/dialog_player1_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/player1_img"
+            android:layout_below="@+id/dialog_player1_Image"
             android:fontFamily="sans-serif-light"
             android:padding="5dp"
             android:text="player 1"
@@ -66,8 +70,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/player2_img"
-            android:fontFamily="san-serif-light"
+            android:layout_below="@+id/dialog_player2_Image"
+            android:fontFamily="sans-serif-light"
             android:padding="5dp"
             android:text="player 2"
             android:textColor="@color/colorAccent"
@@ -95,26 +99,27 @@
 
     </RelativeLayout>
 
-	<Button
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:text="Rematch"
-		android:layout_marginStart="16dp"
-		android:layout_marginEnd="16dp"
-		android:textSize="18sp"
-		android:id="@+id/gameover_dialog_rematch"
-		android:layout_marginTop="40dp"/>
+    <Button
+        android:id="@+id/gameover_dialog_rematch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="Rematch"
+        android:textSize="18sp" />
 
-	<Button
-		android:id="@+id/gameover_dialog_end_game"
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:text="End Game"
-		android:layout_marginEnd="16dp"
-		android:layout_marginStart="16dp"
-		android:layout_marginTop="10dp"
-		android:textSize="18sp"
-		android:layout_marginBottom="40dp"/>
+    <Button
+        android:id="@+id/gameover_dialog_end_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:text="End Game"
+        android:textSize="18sp" />
 
 </LinearLayout>
 
+</ScrollView>

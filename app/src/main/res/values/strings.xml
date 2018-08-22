@@ -1,74 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Master TicTacToe</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_mode_done">Done</string>
+    <string name="about_app">This is the final Project for ALC 2.0 Android Beginner Track (Take-a-climb-challenge).\n\nIt is an Intelligent Tic-tac-toe game that supports playing with the computer(singleplayer) and playing with another person (Multiplayer). The game has simple Artificial Intelligence implementations which makes the Computer play the game of tictactoe perfectly.</string>
+    <string name="about_developer">Ismail Nurudeen is an Intelligent Android Developer,Web Developer and a Teens Development Advocate. He has developed a few problem solving apps and is currently developing more…\n Read More about him at:</string>
+    <string name="about_game">Tic-tac-tac is a Two Player game played on a 3x3 or 5x5 grid. the first player who succeeds in playing three of his mark/symbol in a horizontal,vertical or diagonal row wins the game.</string>
+    <string name="app_name">Master Tic Tac Toe</string>
     <string name="end_game">End game</string>
-    <string name="restart">Restart</string>
-    <string name="title_activity_settings">Settings</string>
-
-    <!-- Strings related to Settings -->
-
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_click_sound">Game Sound</string>
-    <string name="pref_description_click_sound">Play sound when box is clicked
-    </string>
-
-    <string name="pref_title_difficulty">Game difficulty</string>
-    <string-array name="pref_difficulty_list_titles">
-        <item>Easy</item>
-        <item>Normal</item>
-        <item>Unbeatable</item>
-    </string-array>
-    <string-array name="pref_difficulty_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
-    <string name="pref_title_board_type">Board Type</string>
-    <string-array name="pref_board_type_list_titles">
-        <item>3x3 Grid</item>
-        <item>5x5 Grid</item>
-    </string-array>
-    <string-array name="pref_board_type_values">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-
-    <string name="pref_title_game_theme">Game Theme</string>
+    <string name="game_controls">Zoom in icon- To zoom in the game board\nZoom out icon-To zoom out the game board\nrestart button-To restart game\n help -To open this dialog\nsettings button - use the settings button to change your game preferences,like Sound,difficulty level and game theme.\n Learn more at:</string>
+    <string name="learn_more_wikipedia">https://en.wikipedia.org/Tic-tac-toe</string>
     <string name="multi_player">MultiPlayer</string>
+    <string name="pref_description_click_sound">Play sound when box is clicked</string>
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_board_type">Board Type</string>
+    <string name="pref_title_click_sound">Game Sound</string>
+    <string name="pref_title_difficulty">Game difficulty</string>
+    <string name="pref_title_game_theme">Game Theme</string>
+    <string name="restart">Restart</string>
+    <string name="search_menu_title">Search</string>
     <string name="single_player">SinglePlayer</string>
-    <string-array name="pref_game_theme_list_titles">
-        <item>Default</item>
-        <item>Theme 1</item>
-        <item>Theme 2</item>
-        <item>Theme 3</item>
-        <item>Theme 4</item>
-    </string-array>
-    <string-array name="pref_game_theme_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-    <string name="about_app">
-        This is the final Project for ALC 2.0 Android Beginner Track (Take-a-climb-challenge).\n\nIt is an Intelligent Tic-tac-toe
-game that supports playing with the computer(singleplayer) and playing with another person (Multiplayer).
-The game has simple Artificial Intelligence implementations which makes the Computer play the game of tictactoe perfectly.
-    </string>
-    <string name="about_developer">
-        Ismail Nurudeen is an Intelligent Android Developer,Web Developer and a Teen Development Advocate.
-    He has developed a few problem solving apps and is currently developing more...\n Read More about him at:
-    </string>
-    <string name="about_game">
-        Tic-tac-tac is a Two Player game played on a 3x3 or 5x5 grid.
-        the first player who succeeds in playing three of his mark/symbol in a horizontal,vertical or diagonal row wins the game.
-    </string>
-    <string name="game_controls"></string>
-    <string name="learn_more_wikipedia">Learn more at :\\nhttps://wikipedia.org/Tic-tac-toe</string>
-
+    <string name="title_activity_settings">Settings</string>
 </resources>

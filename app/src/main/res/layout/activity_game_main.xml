@@ -2,11 +2,13 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_game_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dark_texture_background">
+    android:background="@android:color/white">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/main_score_board"
         android:layout_width="match_parent"
         android:layout_height="124dp"
         android:background="@drawable/ic_launcher_background"
@@ -92,9 +94,9 @@
         <TextView
             android:id="@+id/player2_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="16dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="32dp"
             android:fontFamily="sans-serif-light"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
@@ -123,9 +125,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="14dp"
         android:background="?android:attr/dividerVertical"
-        android:visibility="gone" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_score_board"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -152,25 +159,17 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            app:cardCornerRadius="1dp"
+            app:cardBackgroundColor="@color/cardview_shadow_end_color"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/brick_bg"
-                android:clipToPadding="true"
-                android:padding="2dp">
-
-                <GridView
-                    android:id="@+id/game_board"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numColumns="3"
-                    android:scrollbars="none"
-                    tools:ignore="NestedScrolling" />
-
-            </LinearLayout>
+            <GridView
+                android:id="@+id/game_board"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="3"
+                android:scrollbars="none"
+                tools:ignore="NestedScrolling" />
 
         </android.support.v7.widget.CardView>
 

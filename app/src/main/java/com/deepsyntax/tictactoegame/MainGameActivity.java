@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 
 public class MainGameActivity extends AppCompatActivity implements OnItemClickListener, OnClickListener, GameControl.ComInterface, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -33,6 +38,8 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     public static String DIFFICULTY_PREF_KEY = "game_difficulty";
     public static String THEME_PREF_KEY = "game_theme";
     public static String BOARD_TYPE_PREF_KEY = "board_type";
+    public static ConstraintLayout MAIN_GAME_BG;
+    public static ConstraintLayout MAIN_SCORE_BOARD;
 
     private boolean isSinglePlayer;
     private GridView gameBoard;
@@ -42,14 +49,19 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
     private GameControl gameControl;
     private boolean isSmallBoard = true;
     private ImageView restartGameBtn, endGameBtn, zoomInBtn, zoomOutBtn, settingsBtn;
-    private CircularImageView player1Image;
-    private CircularImageView player2Image;
+    private CircularImageView player1ImageView, player2ImageView;
     private boolean isPlayerTurn;
     private int numsOfBoxes;
     private Board board;
     private boolean soundPref;
     int gameDifficultyPref, gameThemePref, boardTypePref;
     private ImageView helpBtn;
+    private Game game;
+    private AlertDialog gameOverDialog;
+    private int symbol;
+    private int player1Symbol, player2Symbol;
+    public static Window APP_WINDOW;
+    private Themes themes;
 
 
     @Override
@@ -57,6 +69,9 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         super.onCreate(savedInstanceState);
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
         // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        APP_WINDOW = getWindow();
+        APP_WINDOW.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         setContentView(R.layout.activity_game_main);
         mainSettingsPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mainSettingsPrefs.registerOnSharedPreferenceChangeListener(this);
@@ -70,14 +85,17 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         player2Name = isSinglePlayer ? "Computer" : nameList.get(1);
 
         int numsRound = extras.getInt("NUMBER_OF_ROUNDS", 0);
-        numsOfBoxes = extras.getInt("NUMBER_OF_GRIDS", 9);
-        int player1Symbol = extras.getInt("PLAYER_SYMBOL", R.drawable.x);
-        int player2Symbol = player1Symbol == R.drawable.x ? R.drawable.o : R.drawable.x;
+        int numsGrid = extras.getInt("NUMBER_OF_GRIDS", -1);
+        numsOfBoxes = numsGrid != -1 ? numsGrid : Integer.parseInt(mainSettingsPrefs.getString(BOARD_TYPE_PREF_KEY, "9"));
+
+        symbol = extras.getInt("PLAYER_SYMBOL", R.drawable.x);
+        themes = new Themes(this);
 
         board = new Board(this);
         board.setNumsOfColumns(3);
         board.setBoxArea(80, 80);
         gameBoard.getLayoutParams().width = board.pixelsToDips(80 * 3);
+
         boardAdapter = new GameBoardAdapter(this, Board.generateBoxes(numsOfBoxes));
         if (numsOfBoxes > 9) {
             gameBoard.setNumColumns(5);
@@ -85,18 +103,26 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
             board.setBoxArea(50, 50);
             gameBoard.getLayoutParams().width = board.pixelsToDips(50 * 5);
         }
-        Game game = new Game(this);
-        game.setPlayersSymbol(player1Symbol, player2Symbol);
-
+        game = new Game(this);
         gameBoard.setAdapter(boardAdapter);
         gameControl = new GameControl(this, gameBoard, boardAdapter);
-        gameControl.setPlayersProps(player1Name, player2Name, player1ScoreTv, player2ScoreTv, player1Image, player2Image);
+        gameControl.setPlayersProps(player1Name, player2Name, player1ScoreTv, player2ScoreTv, player1ImageView, player2ImageView);
         gameControl.setNumberOfRounds(numsRound);
         gameControl.resetScore();
-        gameControl.showActivePlayer(player1Image);
+        gameControl.showActivePlayer(player1ImageView);
+        gameControl.isSinglePlayer(isSinglePlayer);
 
-        initCurrentSettings(mainSettingsPrefs);
-        displayPlayerInfo();
+        initCurrentSettings(mainSettingsPrefs, true);
+
+        int themeIndex = extras.getInt("THEME_CHOICE", -1);
+        if (themeIndex != -1) {
+            themes.setPlayer1Symbol(symbol);
+            boardAdapter.setThemeIndex(themeIndex);
+            gameBoard.setAdapter(boardAdapter);
+            player1Symbol = symbol == R.drawable.x ? game.getXPlayerSymbol() : game.getOPlayerSymbol();
+            player2Symbol = symbol == R.drawable.x ? game.getOPlayerSymbol() : game.getXPlayerSymbol();
+            displayPlayerInfo();
+        }
     }
 
     @Override
@@ -114,7 +140,8 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         int size = numsOfBoxes > 9 ? 60 : 100;
         gameBoard.setOnTouchListener(null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog  gameOverDialog = builder.create();;
+        ;
+
         switch (v.getId()) {
             case R.id.end_game_btn:
                 endGame();
@@ -134,8 +161,12 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
                 builder.setView(dialogView);
                 builder.setIcon(R.drawable.ic_help_outline_black_24dp);
                 builder.setCancelable(true);
-                gameOverDialog.show();
                 dialogView.findViewById(R.id.help_dailog_ok).setOnClickListener(this);
+                TextView wikipediaLink = dialogView.findViewById(R.id.learn_more_tictactoe);
+                Pattern pattern = Pattern.compile("\\bAndroid+\\b");
+                Linkify.addLinks(wikipediaLink, pattern, "http://en.wikipedia.org/tic-tac-toe");
+                gameOverDialog = builder.create();
+                gameOverDialog.show();
                 break;
             case R.id.help_dailog_ok:
                 gameOverDialog.dismiss();
@@ -150,12 +181,14 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
 
     private void initializeViews() {
 //        Manually binding views using View ID
+        MAIN_SCORE_BOARD = findViewById(R.id.main_score_board);
+        MAIN_GAME_BG = findViewById(R.id.main_game_bg);
         player1NameTv = findViewById(R.id.player1_label);
         player2NameTv = findViewById(R.id.player2_label);
         player1ScoreTv = findViewById(R.id.player1_score);
         player2ScoreTv = findViewById(R.id.player2_score);
-        player1Image = findViewById(R.id.player1_img);
-        player2Image = findViewById(R.id.player2_img);
+        player1ImageView = findViewById(R.id.player1_img);
+        player2ImageView = findViewById(R.id.player2_img);
         restartGameBtn = findViewById(R.id.restart_game_btn);
         endGameBtn = findViewById(R.id.end_game_btn);
         zoomInBtn = findViewById(R.id.zoom_in_btn);
@@ -172,20 +205,40 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         zoomOutBtn.setOnClickListener(this);
         helpBtn.setOnClickListener(this);
         settingsBtn.setOnClickListener(this);
+        game = new Game(this);
     }
 
-    private void initCurrentSettings(SharedPreferences prefs) {
+    private void initCurrentSettings(SharedPreferences prefs, boolean themeChanged) {
         soundPref = prefs.getBoolean(SOUND_PREF_KEY, true);
-        boardTypePref = prefs.getInt(BOARD_TYPE_PREF_KEY, 0);
-        gameThemePref = prefs.getInt(THEME_PREF_KEY, 0);
-        gameDifficultyPref = prefs.getInt(DIFFICULTY_PREF_KEY, 1);
+        gameThemePref = Integer.parseInt(prefs.getString(THEME_PREF_KEY, "0"));
+        gameDifficultyPref = Integer.parseInt(prefs.getString(DIFFICULTY_PREF_KEY, "1"));
+
         gameControl.enableSound(soundPref);
         gameControl.setDifficultyLevel(gameDifficultyPref);
+        if (themeChanged) {
+            boardAdapter.setThemeIndex(gameThemePref);
+            gameBoard.setAdapter(boardAdapter);
+            int[] themeSymbols = themes.getCurrentThemeSymbols(gameThemePref);
+            player1Symbol = symbol == R.drawable.x ? themeSymbols[0] : themeSymbols[1];
+            player2Symbol = symbol == R.drawable.x ? themeSymbols[1] : themeSymbols[0];
+            displayPlayerInfo();
+        }
     }
 
     private void displayPlayerInfo() {
         player1NameTv.setText(player1Name);
         player2NameTv.setText(player2Name);
+
+        if (Players.getPlayer1Image() != null) {
+            player1ImageView.setImageBitmap(Players.getPlayer1Image());
+        } else {
+            player1ImageView.setImageResource(player1Symbol);
+        }
+        if (Players.getPlayer2Image() != null) {
+            player2ImageView.setImageBitmap(Players.getPlayer2Image());
+        } else {
+            player2ImageView.setImageResource(player2Symbol);
+        }
     }
 
     public void enableBtns(boolean state) {
@@ -204,6 +257,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
 
     @Override
     public void onEndGame() {
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
@@ -212,6 +266,7 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
         // TODO: Implement this method
         super.onDestroy();
         board.setBoxArea(80, 80);
+        Players.resetDefaults();
     }
 
     @Override
@@ -259,7 +314,15 @@ public class MainGameActivity extends AppCompatActivity implements OnItemClickLi
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        initCurrentSettings(sharedPreferences);
+        if (key.equals(THEME_PREF_KEY)) {
+            gameControl.restartGame();
+            initCurrentSettings(sharedPreferences, true);
+        } else {
+            initCurrentSettings(sharedPreferences, false);
+            boardAdapter = new GameBoardAdapter(this, Board.generateBoxes(numsOfBoxes), GameControl.currentPlayer, GameControl.game.getAllMoves());
+            boardAdapter.redisplay(true);
+        }
+
     }
 }
 
